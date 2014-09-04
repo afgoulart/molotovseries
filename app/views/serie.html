@@ -1,0 +1,50 @@
+<div class="blogdetail sections already-visible come-in" ng-init="getserie();home=false" ng-hide="load">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <div class="avatar">
+                <figure>
+                    <a href="blog-fullwidth.html">
+                        <img ng-src="{{serie.img}}" width="200" alt="">
+                    </a>
+                </figure>
+                <h5>{{serie.title}}</h5>
+                <p>
+                    <a href="#">curtir</a>
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
+            <div class="blogtext">
+                <div class="clearfix"></div>
+                <div class="blogmetas">
+                    <h2 class="heading">Sinopse</h2>
+                </div>
+                <p style="text-align:justify">
+                    {{serie.sinopse}}
+                </p>
+                <hr>
+                <div class="tabsect">
+                    <ul class="nav nav-tabs" id="newTab">
+                        <li ng-class="{active: $index == 0}" ng-repeat="_temp in serie.temporadas"><a ng-href="#{{$index}}_temporada" data-toggle="tab">{{$index+1}}ª Temporada</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane " ng-class="{active: $index == 0}" ng-repeat="_temp in serie.temporadas" id="{{$index}}_temporada">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" ng-repeat="t in _temp">
+                                    <h4>{{t.title}}</h4>
+                                    <ul class="list-group" ng-repeat="episodio in t.episodios">
+                                        <li class="list-group-item">{{episodio.title}}
+                                            <br>
+                                            <a class="btn btn-primary btn-xs backcolor" ng-href="#!/show?i={{serie._id.$oid}}&k={{l.id}}" ng-click="load = true;" ng-repeat="l in episodio.link" style="margin-right:1%;">{{l.player}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

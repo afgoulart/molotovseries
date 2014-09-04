@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Molotov">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Molotov Series</title>
+    <!--// Responsive //-->
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--// Stylesheets //-->
+    <link href="assets/css/style.css" rel="stylesheet" media="screen">
+    <link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script type="text/javascript" src="js/respond.min.js"></script>
+<![endif]-->
+    <!--<script src="chrome-extension://jgghnecdoiloelcogfmgjgcacadpaejf/inject.js"></script>
+    <script src="chrome-extension://jgghnecdoiloelcogfmgjgcacadpaejf/inject.js"></script>-->
+</head>
+
+<body>
+    <!-- Wrapper Start -->
+    <div class="wrapper" ng-controller="MolotovController">
+        <!-- Header Start -->
+        <header>
+            <!-- Header Top Strip Start -->
+
+            <!-- Header Top Strip End -->
+            <!-- Logo + Search + Advertisment Start -->
+            <div class="logobar">
+                <div class="custom-container">
+                    <div class="row">
+                        <!-- Logo Start -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="align-content: center;padding-left: 50%;margin-left: -110px; padding-bottom:2%;padding-top:1%">
+                            <div class="logo" style="">
+                                <a href="index.html">
+                                    <img src="assets/images/MOLOTOV1.jpg" width="220" alt="Molotov Series">
+                                </a>
+                            </div>
+                            <b>Open-Source</b> 
+                        </div>
+                        <div align="center" style="padding:0;margin:0;margin-top:-2%" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <i> <h6>O primeiro portal de séries totalmente Open-source</h6></i>
+                        </div>
+                        <!-- Logo End -->
+                        <!-- Search Start -->
+                        
+                        <!-- Search End -->
+                        <!-- Advertisment Start -->
+
+                        <!-- Advertisment End -->
+                    </div>
+                </div>
+            </div>
+            <!-- Logo + Search + Advertisment End -->
+            <!-- Navigation Strip Start -->
+            <div class="navigationstrip stickynav bordercolor-top">
+                <div class="custom-container">
+                    <div class="row">
+                        <!-- Navigation Start -->
+                        <div class="col-lg-10 col-md-9 col-sm-6 col-xs-4">
+                            <div class="navigation">
+                                <!-- navbar Start -->
+                                <div class="navbar yamm navbar-default">
+                                    <div class="row">
+                                        <div class="navbar-header">
+                                            <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle">
+                                                <i class="fa fa-bars"></i> Menu
+                                            </button>
+                                        </div>
+                                        <div id="navbar-collapse-1" class="navbar-collapse collapse">
+                                            <ul class="nav navbar-nav">
+                                                 <li class="dropdown">
+                                                    <a href="#!" class="dropdown-toggle">Ver todas</a>
+                                                </li>
+                                                <li class="dropdown">
+                                                    <a href="#!" class="dropdown-toggle">Favoritos</a>
+                                                </li>
+                                                <li class="dropdown">
+                                                    <a href="#!" class="dropdown-toggle">Séries do dia</a>
+                                                </li>
+                                                <li class="dropdown">
+                                                    <a href="#!" data-toggle="dropdown" class="dropdown-toggle">Calendário de Séries</a>
+                                                </li>
+                                                <li class="dropdown pull-right">
+                                                    <div class="socialnetworks" style="margin-top:15%;">
+                                                        <ul class="pull-right">
+                                                            <li><a href="#" data-toggle="tooltip" title="" class="facebook" data-original-title="Facebook"><i class="fa fa-facebook"></i></a>
+                                                            </li>
+                                                            <li><a href="#" data-toggle="tooltip" title="" class="youtube" data-original-title="Youtube"><i class="fa fa-youtube"></i></a>
+                                                            </li>
+                                                            <li><a href="#" data-toggle="tooltip" title="" class="twitter" data-original-title="Twitter"><i class="fa fa-twitter"></i></a>
+                                                            </li>
+                                                            <li><a href="#" data-toggle="tooltip" title="" class="vimeo" data-original-title="Vimeo"><i class="fa fa-vimeo-square"></i></a>
+                                                            </li>
+                                                            <li><a href="#" data-toggle="tooltip" title="" class="pinterest" data-original-title="Pinterest"><i class="fa fa-pinterest"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <!-- navbar End -->
+                            </div>
+                        </div>
+                        <!-- Navigation End -->
+                    </div>
+                </div>
+            </div>
+            <!-- Navigation Strip End -->
+        </header>
+        <!-- Header End -->
+        <!-- Contents Start -->
+        <div ng-include="'load.html'" ng-show="load"></div>
+        <div class="contents" style="height-min:400px;">
+            <div class="custom-container" ng-view>
+
+            </div>
+        </div>
+        <!-- Contents End -->
+        <!-- Footer Start -->
+        <footer class="style1" style="margin-top:8%">
+            <div class="custom-container">
+                <!-- Footer Videos Start -->
+                <div class="row"></div>
+                <!-- Footer Videos End -->
+                <hr>
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-sm-9 .col-xs-9">
+                        <p class="copyrights">© 2014. All rights reserved? hahahahahaha . Created by Molotov Na Cara
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- Footer End -->
+        <a href="#" class="pull-right gotop btn btn-primary backcolor" style="display: none;"> <i class="fa fa-arrow-up"></i> 
+        </a>
+    </div>
+    <!-- Wrapper End -->
+    <!--// Javascript //-->
+    <script type="text/javascript" src="assets/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular/angular.js"></script>
+    <script type="text/javascript" src="assets/js/angular/angular-route.js"></script>
+    <script type="text/javascript" src="assets/js/underscore-min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-mongolab.js"></script>
+    <script type="text/javascript" src="assets/js/isotope.pkgd.js"></script>
+    <script type="text/javascript" src="assets/js/ng-isotope.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <!--<script type="text/javascript" src="assets/js/json2.js"></script>-->
+    <!-- app -->
+    <script type="text/javascript" src="app/app.js"></script>
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-50738310-1', 'softcircles.net');
+    ga('send', 'pageview');
+    </script>
+
+
+
+    <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>
+    <div id="lbOverlay" style="display: none;"></div>
+    <div id="lbCenter" style="display: none;">
+        <div id="lbImage">
+            <div style="position: relative;"><a id="lbPrevLink" href="#"><i class="fa fa-arrow-circle-left"></i></a><a id="lbNextLink" href="#"><i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div id="lbBottomContainer" style="display: none;">
+        <div id="lbBottom"><a id="lbCloseLink" href="#"><i class="fa fa-times-circle"></i><strong>Close</strong></a>
+            <div id="lbCaption"></div>
+            <div id="lbNumber"></div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" style="display: none;"></iframe>
+    <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>
+    <div id="lbOverlay" style="display: none;"></div>
+    <div id="lbCenter" style="display: none;">
+        <div id="lbImage">
+            <div style="position: relative;"><a id="lbPrevLink" href="#"><i class="fa fa-arrow-circle-left"></i></a><a id="lbNextLink" href="#"><i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div id="lbBottomContainer" style="display: none;">
+        <div id="lbBottom"><a id="lbCloseLink" href="#"><i class="fa fa-times-circle"></i><strong>Close</strong></a>
+            <div id="lbCaption"></div>
+            <div id="lbNumber"></div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+</body>
+
+</html>
