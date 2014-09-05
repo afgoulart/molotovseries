@@ -17,8 +17,6 @@
     <script src="js/html5shiv.js"></script>
     <script type="text/javascript" src="js/respond.min.js"></script>
 <![endif]-->
-    <!--<script src="chrome-extension://jgghnecdoiloelcogfmgjgcacadpaejf/inject.js"></script>
-    <script src="chrome-extension://jgghnecdoiloelcogfmgjgcacadpaejf/inject.js"></script>-->
 </head>
 
 <body>
@@ -45,13 +43,15 @@
                         <div align="center" style="padding:0;margin:0;margin-top:-2%" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <i> <h6>O primeiro portal de séries totalmente Open-source</h6></i>
                         </div>
-                        <!-- Logo End -->
-                        <!-- Search Start -->
-                        
-                        <!-- Search End -->
-                        <!-- Advertisment Start -->
-
-                        <!-- Advertisment End -->
+                        <div align="center" style="padding:0;margin:0;margin-top:-2%; display:none" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" id="login" ng-click="login()">login</button>
+                            <button type="button" id="logout" ng-click="logout()">logout</button>
+                            <button type="button" id="api" ng-click="api()">api user data call</button>
+                            <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button>
+                            <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
+                            <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
+                            <pre>username: <span id="api_first_name" ng-bind="user.first_name"></span></pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                                         </div>
                                         <div id="navbar-collapse-1" class="navbar-collapse collapse">
                                             <ul class="nav navbar-nav">
-                                                 <li class="dropdown">
+                                                <li class="dropdown">
                                                     <a href="#!" class="dropdown-toggle">Ver todas</a>
                                                 </li>
                                                 <li class="dropdown">
@@ -84,23 +84,6 @@
                                                 </li>
                                                 <li class="dropdown">
                                                     <a href="#!" data-toggle="dropdown" class="dropdown-toggle">Calendário de Séries</a>
-                                                </li>
-                                                <li class="dropdown pull-right">
-                                                    <div class="socialnetworks" style="margin-top:15%;">
-                                                        <ul class="pull-right">
-                                                            <li><a href="#" data-toggle="tooltip" title="" class="facebook" data-original-title="Facebook"><i class="fa fa-facebook"></i></a>
-                                                            </li>
-                                                            <li><a href="#" data-toggle="tooltip" title="" class="youtube" data-original-title="Youtube"><i class="fa fa-youtube"></i></a>
-                                                            </li>
-                                                            <li><a href="#" data-toggle="tooltip" title="" class="twitter" data-original-title="Twitter"><i class="fa fa-twitter"></i></a>
-                                                            </li>
-                                                            <li><a href="#" data-toggle="tooltip" title="" class="vimeo" data-original-title="Vimeo"><i class="fa fa-vimeo-square"></i></a>
-                                                            </li>
-                                                            <li><a href="#" data-toggle="tooltip" title="" class="pinterest" data-original-title="Pinterest"><i class="fa fa-pinterest"></i></a>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="clearfix"></div>
-                                                    </div>
                                                 </li>
                                             </ul>
                                         </div>
@@ -118,10 +101,33 @@
         </header>
         <!-- Header End -->
         <!-- Contents Start -->
-        <div ng-include="'load.html'" ng-show="load"></div>
+        
         <div class="contents" style="height-min:400px;">
-            <div class="custom-container" ng-view>
+            <div class="row">
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                    <div ng-include="'load.html'" ng-show="load"></div>
+                    <div class="custom-container" ng-view>
 
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="fb-like-box" data-href="https://www.facebook.com/molotovseries" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+                    <hr>
+
+                    <a class="twitter-timeline" href="https://twitter.com/molotovseries" data-widget-id="">Tweets de @molotovseries</a>
+                    <script>
+                    ! function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0],
+                            p = /^http:/.test(d.location) ? 'http' : 'https';
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = p + "://platform.twitter.com/widgets.js";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, "script", "twitter-wjs");
+                    </script>
+                </div>
             </div>
         </div>
         <!-- Contents End -->
@@ -155,59 +161,61 @@
     <script type="text/javascript" src="assets/js/isotope.pkgd.js"></script>
     <script type="text/javascript" src="assets/js/ng-isotope.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-facebook.js"></script>
     <!--<script type="text/javascript" src="assets/js/json2.js"></script>-->
     <!-- app -->
     <script type="text/javascript" src="app/app.js"></script>
     <script>
-    (function(i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function() {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    // // This is called with the results from from FB.getLoginStatus().
+    // function statusChangeCallback(response) {
+    //     console.log('statusChangeCallback');
+    //     console.log(response);
+    //     if (response.status === 'connected') {
+    //         testAPI();
+    //     } else if (response.status === 'not_authorized') {
+    //         document.getElementById('status').innerHTML = 'Please log ' +
+    //             'into this app.';
+    //     } else {
+    //         document.getElementById('status').innerHTML = 'Please log ' +
+    //             'into Facebook.';
+    //     }
+    // }
 
-    ga('create', 'UA-50738310-1', 'softcircles.net');
-    ga('send', 'pageview');
+    // function checkLoginState() {
+    //     FB.getLoginStatus(function(response) {
+    //         statusChangeCallback(response);
+    //     });
+    // }
+    // window.fbAsyncInit = function() {
+    //     FB.init({
+    //         appId: '1501693240076943',
+    //         cookie: true, // enable cookies to allow the server to access 
+    //         xfbml: true, // parse social plugins on this page
+    //         version: 'v2.1' // use version 2.1
+    //     });
+    //     FB.getLoginStatus(function(response) {
+    //         statusChangeCallback(response);
+    //     });
+    // };
+    // // Load the SDK asynchronously
+    // (function(d, s, id) {
+    //     var js, fjs = d.getElementsByTagName(s)[0];
+    //     if (d.getElementById(id)) return;
+    //     js = d.createElement(s);
+    //     js.id = id;
+    //     js.src = "//connect.facebook.net/en_US/sdk.js";
+    //     fjs.parentNode.insertBefore(js, fjs);
+    // }(document, 'script', 'facebook-jssdk'));
+
+    // function testAPI() {
+    //     console.log('Welcome!  Fetching your information.... ');
+    //     FB.api('/me', function(response) {
+    //         console.log('Successful login for: ' + response.name);
+    //         document.getElementById('status').innerHTML =
+    //             'Thanks for logging in, ' + response.name + '!';
+    //     });
+    // }
     </script>
-
-
-
-    <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>
-    <div id="lbOverlay" style="display: none;"></div>
-    <div id="lbCenter" style="display: none;">
-        <div id="lbImage">
-            <div style="position: relative;"><a id="lbPrevLink" href="#"><i class="fa fa-arrow-circle-left"></i></a><a id="lbNextLink" href="#"><i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-    </div>
-    <div id="lbBottomContainer" style="display: none;">
-        <div id="lbBottom"><a id="lbCloseLink" href="#"><i class="fa fa-times-circle"></i><strong>Close</strong></a>
-            <div id="lbCaption"></div>
-            <div id="lbNumber"></div>
-            <div style="clear: both;"></div>
-        </div>
-    </div>
-    <iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" style="display: none;"></iframe>
-    <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>
-    <div id="lbOverlay" style="display: none;"></div>
-    <div id="lbCenter" style="display: none;">
-        <div id="lbImage">
-            <div style="position: relative;"><a id="lbPrevLink" href="#"><i class="fa fa-arrow-circle-left"></i></a><a id="lbNextLink" href="#"><i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-    </div>
-    <div id="lbBottomContainer" style="display: none;">
-        <div id="lbBottom"><a id="lbCloseLink" href="#"><i class="fa fa-times-circle"></i><strong>Close</strong></a>
-            <div id="lbCaption"></div>
-            <div id="lbNumber"></div>
-            <div style="clear: both;"></div>
-        </div>
-    </div>
 </body>
 
 </html>
