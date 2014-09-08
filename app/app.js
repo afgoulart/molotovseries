@@ -73,8 +73,13 @@
             $scope.getserie = function() {
                 $scope.load = true;
                 console.log($routeParams.id);
+                if (window.localStorage[$routeParams.id] !== undefined) {
+                    $scope.serie = JSON.parse(window.localStorage[$routeParams.id]);
+                    $scope.load = false;
+                }
                 Series.getById($routeParams.id).then(function(serie) {
                     $scope.serie = serie;
+                    window.localStorage[$routeParams.id] = JSON.stringify($scope.serie);
                     $scope.load = false;
                 });
                 FB.XFBML.parse();
