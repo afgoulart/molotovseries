@@ -1,5 +1,6 @@
 (function() {
     'use strict';
+    window.online = true;
     window.molotov = angular.module('Molotov', ['ngRoute', 'mongolabResourceHttp', 'ng-isotope', 'facebook']);
     window.molotov.config(function($routeProvider, $locationProvider) {
         $routeProvider
@@ -12,14 +13,21 @@
             .when('/show/:id', {
                 templateUrl: 'app/views/show.html'
             })
+            .when('/calendar', {
+                templateUrl: 'app/views/calendar.html'
+            })
             .otherwise({
                 redirectTo: '/'
             });
         // $locationProvider.html5Mode(true);
         $locationProvider.hashPrefix('!');
+        /**/
+
     });
     window.molotov.config(function(FacebookProvider) {
-        FacebookProvider.init('1501693240076943');
+        // console.log('location.hostname', location.hostname);
+        // FacebookProvider.init('1501693240076943');
+        FacebookProvider.init('1501692520077015');
     });
     window.molotov.constant('MONGOLAB_CONFIG', {
         API_KEY: 'F1Fk9-FjLLrA4c62rbTuCDmgkGg0sE4A',
@@ -41,30 +49,35 @@
             $scope.load = true;
             $scope.getAll = function() {
                 $scope.load = true;
-                Series.all({
-                    fields: {
-                        "title": 1,
-                        "hashid": 1,
-                        "img": 1
-                    },
-                    sort: {
-                        "title": 1
-                    }
-                }).then(function(series) {
-                    $scope.series = series;
-                    // console.log($scope.series)
+                if (window.localStorage['ms_ss'] !== undefined) {
+                    $scope.series = JSON.parse(window.localStorage['ms_ss']);
                     $scope.load = false;
-                });
+                } else {
+                    Series.all({
+                        fields: {
+                            "title": 1,
+                            "hashid": 1,
+                            "img": 1
+                        },
+                        sort: {
+                            "title": 1
+                        }
+                    }).then(function(series) {
+                        // console.log( === undefined ? );
+                        $scope.series = series;
+                        window.localStorage['ms_ss'] = JSON.stringify($scope.series);
+                        $scope.load = false;
+                    });
+                }
             };
             $scope.getserie = function() {
                 $scope.load = true;
                 console.log($routeParams.id);
                 Series.getById($routeParams.id).then(function(serie) {
-                    // console.log(serie);
                     $scope.serie = serie;
-                    // window.localStorage[$routeParams.id] = JSON.stringify($scope.serie);
                     $scope.load = false;
                 });
+                FB.XFBML.parse();
             };
             $scope.showepisode = function() {
                 $scope.load = true;
@@ -84,6 +97,10 @@
                     $scope.serie.currentlink = PLAYERS[p].replace("{{id}}", k);
                 });
             };
+
+            $scope.loadoff = function() {
+                $scope.load = false;
+            }
 
             /*FACEBOOK*/
             $scope.loginStatus = 'disconnected';
@@ -339,3 +356,11 @@ function getParam(name) {
     else
         return results[1];
 }
+
+function online(event) {
+    window.online = navigator.onLine ? true : false;
+    console.log(window.online);
+}
+
+addEvent(window, 'online', online);
+addEvent(window, 'offline', online);
