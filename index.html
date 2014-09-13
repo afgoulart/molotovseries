@@ -10,9 +10,9 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <!--// Stylesheets //-->
+    <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon">
     <link href="assets/css/style.css" rel="stylesheet" media="screen">
     <link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
-    <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script type="text/javascript" src="js/respond.min.js"></script>
@@ -20,10 +20,12 @@
 </head>
 
 <body>
+
     <!-- Wrapper Start -->
     <div class="wrapper" ng-controller="MolotovController">
         <!-- Header Start -->
         <header>
+        <a href="https://github.com/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
             <!-- Header Top Strip Start -->
 
             <!-- Header Top Strip End -->
@@ -43,14 +45,24 @@
                         <div align="center" style="padding:0;margin:0;margin-top:-2%" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <i> <h6>O primeiro portal de séries totalmente Open-source</h6></i>
                         </div>
-                        <div align="center" style="padding:0;margin:0;margin-top:-2%; display:none" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <button type="button" id="login" ng-click="login()">login</button>
-                            <button type="button" id="logout" ng-click="logout()">logout</button>
-                            <button type="button" id="api" ng-click="api()">api user data call</button>
-                            <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button>
-                            <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
-                            <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
-                            <pre>username: <span id="api_first_name" ng-bind="user.first_name"></span></pre>
+                        <div align="center" style="padding:0;margin:0;margin-top:-2%;margin-bottom:1%; display:block" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <a class="socialbox facebook " alt="Entrar com o facebook" href="javascript:void(0)" ng-click="login()">
+                                <div class="social-icon">
+                                    <i class="fa fa-fw fa-facebook"></i>
+                                </div>
+                                <div class="description">
+                                    <span><b>ENTRE COM O FACEBOOK</b>
+                                    </span>
+                                    <span class="ng-binding-likes">E aproveite todas os nossos recursos</span>
+                                </div>
+                            </a>
+                            <!-- <button type="button" id="login" >login</button> -->
+                            <!-- <button type="button" id="logout" ng-click="logout()">logout</button> -->
+                            <!-- <button type="button" id="api" ng-click="api()">api user data call</button> -->
+                            <!-- <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button> -->
+                            <!-- <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre> -->
+                            <!-- <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre> -->
+                            <!-- <pre>username: <span id="api_first_name" ng-bind="user.first_name"></span></pre> -->
                         </div>
                     </div>
                 </div>
@@ -74,16 +86,33 @@
                                         <div id="navbar-collapse-1" class="navbar-collapse collapse">
                                             <ul class="nav navbar-nav">
                                                 <li class="dropdown">
-                                                    <a href="#!" class="dropdown-toggle">Ver todas</a>
+                                                    <a href="#!" class="dropdown-toggle">Início</a>
                                                 </li>
                                                 <li class="dropdown">
-                                                    <a href="#!" class="dropdown-toggle">Favoritos</a>
+                                                    <a href="#!/all" ng-click="load = true" class="dropdown-toggle">Ver todas</a>
                                                 </li>
+<!--                                                 <li class="dropdown">
+                                                    <a href="#!" class="dropdown-toggle">Favoritos</a>
+                                                </li> -->
                                                 <li class="dropdown">
                                                     <a href="#!" class="dropdown-toggle">Séries do dia</a>
                                                 </li>
                                                 <li class="dropdown">
                                                     <a href="#!/calendar" data-toggle="dropdown" class="dropdown-toggle">Calendário de Séries</a>
+                                                </li>
+                                                <li class="dropdown" style="width:360px">
+                                                    <div class="searchbox" style="padding-top:2%">
+                                                        <form>
+                                                            <ul>
+                                                                <li>
+                                                                    <input type="text" ng-model="search" placeholder="Search your favorite serie">
+                                                                </li>
+                                                                <li class="pull-right">
+                                                                    <input type="submit" value="GO">
+                                                                </li>
+                                                            </ul>
+                                                        </form>
+                                                    </div>
                                                 </li>
                                             </ul>
                                         </div>
@@ -103,15 +132,15 @@
         <!-- Contents Start -->
 
         <div class="contents" style="height-min:400px;">
-            <div class="row">
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+            <div class="custom-container">
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12" style="border-right:1px solid lightgrey;">
                     <div ng-include="'load.html'" ng-show="load"></div>
-                    <div class="custom-container" ng-view>
+                    <div style="width:100%" ng-view>
 
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="fb-like-box" data-href="https://www.facebook.com/molotovseries" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="fb-like-box" style="width:100%" data-href="https://www.facebook.com/molotovseries" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
                     <hr>
 
                     <a class="twitter-timeline" href="https://twitter.com/molotovseries" data-widget-id="">Tweets de @molotovseries</a>

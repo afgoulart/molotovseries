@@ -1,10 +1,15 @@
 (function() {
     'use strict';
+    window.appversion = '0.1';
     window.online = true;
+    window.vbase = '0.1';
     window.molotov = angular.module('Molotov', ['ngRoute', 'mongolabResourceHttp', 'ng-isotope', 'facebook']);
     window.molotov.config(function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
+                templateUrl: 'app/views/home3.html'
+            })
+            .when('/all', {
                 templateUrl: 'app/views/home.html'
             })
             .when('/serie/:id', {
@@ -36,6 +41,9 @@
     window.molotov.factory('Series', function($mongolabResourceHttp) {
         return $mongolabResourceHttp('series');
     });
+    window.molotov.factory('Casting', function($mongolabResourceHttp) {
+        return $mongolabResourceHttp('casting');
+    });
     window.molotov.filter('trusted', ['$sce',
         function($sce) {
             return function(url) {
@@ -43,14 +51,15 @@
             };
         }
     ]);
-    window.molotov.controller('MolotovController', ['$scope', '$http', '$routeParams', 'Series', 'Facebook',
-        function($scope, $http, $routeParams, Series, Facebook) {
+    window.molotov.controller('MolotovController', ['$scope', '$http', '$routeParams', 'Series', 'Casting', 'Facebook',
+        function($scope, $http, $routeParams, Series, Casting, Facebook) {
             $scope.series = [];
             $scope.load = true;
+            /**/
             $scope.getAll = function() {
                 $scope.load = true;
-                if (window.localStorage['ms_ss'] !== undefined) {
-                    $scope.series = JSON.parse(window.localStorage['ms_ss']);
+                if (window.localStorage[window.vbase + '_ms_ss'] !== undefined) {
+                    $scope.series = JSON.parse(window.localStorage[window.vbase + 'ms_ss']);
                     $scope.load = false;
                 } else {
                     Series.all({
@@ -60,26 +69,62 @@
                             "img": 1
                         },
                         sort: {
-                            "title": 1
+                            // "title": 1
                         }
                     }).then(function(series) {
                         // console.log( === undefined ? );
                         $scope.series = series;
-                        window.localStorage['ms_ss'] = JSON.stringify($scope.series);
+                        // window.localStorage[window.vbase + '_ms_ss'] = JSON.stringify($scope.series);
                         $scope.load = false;
                     });
                 }
             };
+
+            $scope.getbirthday = function(year) {
+                var d = (new Date().getMonth() + 1) + '-' + new Date().getDate();
+                if (window.localStorage[window.vbase + '_ms_bd'] !== undefined) {
+                    $scope.currentbirthday = JSON.parse(window.localStorage[window.vbase + '_ms_bd']);
+                    $scope.load = false;
+                } else {
+
+                    Casting.query({
+                        "nascimentodt": d
+                    }).then(function(birthday) {
+                        $scope.currentbirthday = birthday;
+                        window.localStorage[window.vbase + '_ms_bd'] = JSON.stringify($scope.currentbirthday);
+                        $scope.load = false;
+                    });
+                }
+
+            };
+            $scope.getseriebyyear = function(year) {
+                $scope.load = true;
+                console.log($routeParams.id);
+                if (window.localStorage[window.vbase + '_ms_sy'] !== undefined) {
+                    $scope.currentseries = JSON.parse(window.localStorage[window.vbase + '_ms_sy']);
+                    $scope.load = false;
+                } else {
+                    Series.query({
+                        "ano": year
+                    }).then(function(series) {
+                        $scope.currentseries = series;
+                        window.localStorage[window.vbase + '_ms_sy'] = JSON.stringify($scope.currentseries);
+                        $scope.load = false;
+                    });
+                }
+                // FB.XFBML.parse();
+            };
+
             $scope.getserie = function() {
                 $scope.load = true;
                 console.log($routeParams.id);
-                if (window.localStorage[$routeParams.id] !== undefined) {
+                if (window.localStorage[window.vbase + '_' + $routeParams.id] !== undefined) {
                     $scope.serie = JSON.parse(window.localStorage[$routeParams.id]);
                     $scope.load = false;
                 }
                 Series.getById($routeParams.id).then(function(serie) {
                     $scope.serie = serie;
-                    window.localStorage[$routeParams.id] = JSON.stringify($scope.serie);
+                    window.localStorage[window.vbase + '_' + $routeParams.id] = JSON.stringify($scope.serie);
                     $scope.load = false;
                 });
                 FB.XFBML.parse();

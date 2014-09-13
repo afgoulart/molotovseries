@@ -2,48 +2,48 @@
 
 /*==================================================
 
-Project:	Video Magazine - HTML Template
-Version:	1.0
-Last change:	13/05/14
-Author :	Kax Miller
+Project:    Video Magazine - HTML Template
+Version:    1.0
+Last change:    13/05/14
+Author :    Kax Miller
 
 [Layout]
 
 * body
-	+ wrapper
-		+ Header / by default there is no class but you can use (style1 and style2) for different styles.
-			- Top Strip / .topstrip
-				- Custom Container (to make layout centered - You may edit its width according to your requirements) /.custom-container
-					- Bootstrap Grid
-						- Categories Menu / .topcategories
-						- Social Networks / .socialnetworks
-			
-			- Logo Strip / .logobar
-				+ Custom Container (to make layout centered - You may edit its width according to your requirements) /.custom-container
-					- Bootstrap Grid
-						- Logo / .logo
-						- Search / .searchbox
-						- Header Advertisement / .header-adv
-			
-			- Main Navigation Strip / .navigationstrip .stickynav (use this class if you want to make navigation sticky - Remove it if you don't need it)
-				- Custom Container (to make layout centered - You may edit its width according to your requirements) /.custom-container
-					- Bootstrap Grid
-						- Navigation / .navigation
-						- Login Section / .loginsec
+    + wrapper
+        + Header / by default there is no class but you can use (style1 and style2) for different styles.
+            - Top Strip / .topstrip
+                - Custom Container (to make layout centered - You may edit its width according to your requirements) /.custom-container
+                    - Bootstrap Grid
+                        - Categories Menu / .topcategories
+                        - Social Networks / .socialnetworks
+            
+            - Logo Strip / .logobar
+                + Custom Container (to make layout centered - You may edit its width according to your requirements) /.custom-container
+                    - Bootstrap Grid
+                        - Logo / .logo
+                        - Search / .searchbox
+                        - Header Advertisement / .header-adv
+            
+            - Main Navigation Strip / .navigationstrip .stickynav (use this class if you want to make navigation sticky - Remove it if you don't need it)
+                - Custom Container (to make layout centered - You may edit its width according to your requirements) /.custom-container
+                    - Bootstrap Grid
+                        - Navigation / .navigation
+                        - Login Section / .loginsec
 
-		+ Content / .contents
-			- Custom Container (to make layout centered - You may edit its width according to your requirements) /.custom-container
-				- Use Bootstrap Grid
-					- Content Column / .equalcol .conentsection (.equalcol used to make all columns height equal)
-						- Content Sections / .sections (apply .clearfix after each section to avoid any issues)
-					- Dark Sidebar / .equalcol .blacksidebar (.equalcol used to make all columns height equal)
-						- Widgets / .widget
-					- Gray Sidebar / .equalcol .graysidebar (.equalcol used to make all columns height equal)
-						- Widgets / .widget
-		
-		+ Footer / .style1 - you can use (style1 to style4) for different styles.
-			- Footer Widgets / .footerwidgets
-				- Use Bootstrap Grid
+        + Content / .contents
+            - Custom Container (to make layout centered - You may edit its width according to your requirements) /.custom-container
+                - Use Bootstrap Grid
+                    - Content Column / .equalcol .conentsection (.equalcol used to make all columns height equal)
+                        - Content Sections / .sections (apply .clearfix after each section to avoid any issues)
+                    - Dark Sidebar / .equalcol .blacksidebar (.equalcol used to make all columns height equal)
+                        - Widgets / .widget
+                    - Gray Sidebar / .equalcol .graysidebar (.equalcol used to make all columns height equal)
+                        - Widgets / .widget
+        
+        + Footer / .style1 - you can use (style1 to style4) for different styles.
+            - Footer Widgets / .footerwidgets
+                - Use Bootstrap Grid
 
 ================================================== */
 
@@ -255,7 +255,6 @@ header.style2 .logobar {
 
 .logo {
     float: left;
-    
 }
 .logo a {
     float: left;
@@ -1335,7 +1334,8 @@ footer .tagswidget {
 .categorieslist ul li {
     width: 100%;
     position: relative;
-    border-top: solid 1px #2b2e36;
+    border-right: solid 1px lightgrey; 
+    /*border-top: solid 1px #2b2e36;*/
 }
 .categorieslist ul li:before {
     content: "";
@@ -2262,4 +2262,76 @@ a.gotop {
 }
 .bordercolor-top {
     border-top: solid 5px #d10909 !important;
+}
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700);*/
+
+a.socialbox {
+    font-family: "Open Sans";
+    font-weight: 300;
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    /* width: 420px; */
+    /*width: 40%;*/
+    margin: 24px 0 0 24px;
+}
+a.socialbox.facebook {
+    background-color: #215d90;
+    -webkit-transition: background-color 0.25s ease-in-out;
+    transition: background-color 0.25s ease-in-out;
+}
+a.socialbox.twitter {
+    background-color: #0198aa;
+    -webkit-transition: background-color 0.25s ease-in-out;
+    transition: background-color 0.25s ease-in-out;
+}
+a.socialbox.pinterest {
+    background-color: #cb2027;
+    -webkit-transition: background-color 0.25s ease-in-out;
+    transition: background-color 0.25s ease-in-out;
+}
+a.socialbox.linkedin {
+    background-color: #0073b2;
+    -webkit-transition: background-color 0.25s ease-in-out;
+    transition: background-color 0.25s ease-in-out;
+}
+a.socialbox .social-icon {
+    line-height: 32px;
+    font-size: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    border-right: 1px solid rgba(255, 255, 255, 0.25);
+    padding-right: 15px;
+}
+a.socialbox .description {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 10px;
+    font-size: 13px;
+}
+a.socialbox .description span {
+    display: block;
+    line-height: 16px;
+}
+iframe, object, embed {
+    max-width: 100%;
+}
+video {
+    width: 100% !important;
+    height: auto !important;
+}
+.fb_iframe_widget {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+.fb_iframe_widget span {
+    display: inline-block;
+    position: relative;
+    text-align: justify;
+    width: 100%;
+    vertical-align: bottom;
+    width: 100%;
+    height: 271px;
 }
