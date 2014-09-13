@@ -1,30 +1,84 @@
+<style>
+.element-item {
+    position: relative;
+    float: left;
+    width: 50px;
+    height: 70px;
+    margin: 3px;
+    padding: 1px;
+    background: #888;
+    color: #262524;
+}
+.element-item > * {
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    margin: 0;
+    padding: 0;
+}
+</style>
 <div class="blogdetail sections already-visible come-in" ng-init="getserie();" ng-hide="load">
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <div class="avatar">
-                <figure>
-                    <a href="blog-fullwidth.html">
-                        <img ng-src="{{serie.img}}" width="200" alt="">
-                    </a>
-                </figure>
+                <a href="#">
+                    <figure>
+                        <img ng-src="{{serie.img}}" style="width:100%" alt="">
+                    </figure>
+                </a>
                 <h5>{{serie.title}}</h5>
-                <p>
-                    <a href="#">curtir</a>
-                </p>
+                <h6>({{serie.ano}})</h6>
             </div>
         </div>
         <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
             <div class="blogtext">
-                <div class="clearfix">
-                    <div class="fb-like" data-href="http://localhost/molotovseries/#!/serie/{{serie._id.$oid}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-                </div>
-                <div class="blogmetas">
-                    <h2 class="heading">Sinopse</h2>
-                </div>
+                <h2 class="heading"> <u> {{serie.title}} ( {{serie.ano}} )</u> 
+                    <div class="fb-like" data-href="http://localhost/molotovseries/#!/serie/{{serie._id.$oid}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true" style="float:left"></div>
+                </h2>
+                <a ng-href="#!/seriebycat/{{c}}" class="btn btn-primary btn-xs backcolor" ng-repeat="c in serie.info.categorias" style="margin-right:1%">{{c}}</a>
+                <h2 class="heading">Sinopse</h2>
+                <p style="text-align:justify">
+
+                </p>
                 <p style="text-align:justify">
                     {{serie.sinopse}}
+                    <br>
+                    <h6>Time: {{serie.info.time}}</h6>
                 </p>
                 <hr>
+                <div class="row">
+                    <h5>Criadores</h5>
+                    <a ng-href="#!/cast/{{c.hashid}}" class="btn" ng-repeat="c in serie.info.creators" style="margin-right:1%">{{c.nome}} (?)</a>
+                </div>
+                <div class="row">
+                    <h5>Casting</h5>
+                    <table class="table table-hover table-condensed">
+                        <tbody>
+                            <tr ng-repeat="s in serie.info.casting">
+                                <td style="width:60px">
+                                    <a ng-href="#!/casting/{{s.hashid}}" class="lightbox-gallery" ng-click="load = true">
+                                        <img style="width:auto%; height:auto" bn-lazy-src="{{s.img}}" id="{{s.hashid}}" alt="{{s.nome}}" class="img-responsive hovereffect imageCache">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a ng-href="#!/casting/{{s.hashid}}">
+                                        <h5>{{s.nome}}</h5>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <!-- <figure class="col-md-1 element-item gallery" data-category="{{s.hashid}}" ng-repeat="s in serie.info.casting">
+                        <a ng-href="#!/casting/{{s.hashid}}" class="lightbox-gallery" ng-click="load = true">
+                            <img style="width:100%; height:100%" bn-lazy-src="{{s.img}}" id="{{s.hashid}}" alt="{{s.nome}}" class="img-responsive hovereffect imageCache">
+                        </a>
+                        <figcaption class="backcolor">
+                            <a ng-href="#!/casting/{{s.hashid}}">{{s.nome}}</a>
+                        </figcaption>
+                    </figure> -->
+                </div>
                 <div class="tabsect">
                     <ul class="nav nav-tabs" id="newTab">
                         <li ng-class="{active: $index == 0}" ng-repeat="_temp in serie.temporadas"><a ng-href="#{{$index}}_temporada" data-toggle="tab">{{$index+1}}ª Temporada</a>

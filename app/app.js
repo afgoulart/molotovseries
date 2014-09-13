@@ -15,6 +15,9 @@
             .when('/serie/:id', {
                 templateUrl: 'app/views/serie.html'
             })
+            .when('/seriebycat/:id', {
+                templateUrl: 'app/views/serie.html'
+            })
             .when('/show/:id', {
                 templateUrl: 'app/views/show.html'
             })
@@ -108,7 +111,7 @@
                         "ano": year
                     }).then(function(series) {
                         $scope.currentseries = series;
-                        window.localStorage[window.vbase + '_ms_sy'] = JSON.stringify($scope.currentseries);
+                        // window.localStorage[window.vbase + '_ms_sy'] = JSON.stringify($scope.currentseries);
                         $scope.load = false;
                     });
                 }
@@ -124,11 +127,27 @@
                 }
                 Series.getById($routeParams.id).then(function(serie) {
                     $scope.serie = serie;
-                    window.localStorage[window.vbase + '_' + $routeParams.id] = JSON.stringify($scope.serie);
+                    // window.localStorage[window.vbase + '_' + $routeParams.id] = JSON.stringify($scope.serie);
                     $scope.load = false;
                 });
                 FB.XFBML.parse();
             };
+
+            $scope.getcast = function() {
+                $scope.load = true;
+                console.log($routeParams.id);
+                if (window.localStorage[window.vbase + '_' + $routeParams.id] !== undefined) {
+                    $scope.serie = JSON.parse(window.localStorage[$routeParams.id]);
+                    $scope.load = false;
+                }
+                Casting.getById($routeParams.id).then(function(cast) {
+                    $scope.cast = cast;
+                    // window.localStorage[window.vbase + '_' + $routeParams.id] = JSON.stringify($scope.cast);
+                    $scope.load = false;
+                });
+                FB.XFBML.parse();
+            };
+
             $scope.showepisode = function() {
                 $scope.load = true;
 
