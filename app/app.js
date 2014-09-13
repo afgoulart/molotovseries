@@ -12,11 +12,14 @@
             .when('/all', {
                 templateUrl: 'app/views/home.html'
             })
+            .when('/casting/:id', {
+                templateUrl: 'app/views/cast.html'
+            })
             .when('/serie/:id', {
                 templateUrl: 'app/views/serie.html'
             })
             .when('/seriebycat/:id', {
-                templateUrl: 'app/views/serie.html'
+                templateUrl: 'app/views/seriebycat.html'
             })
             .when('/show/:id', {
                 templateUrl: 'app/views/show.html'
@@ -100,6 +103,24 @@
                 }
 
             };
+            $scope.getseriebycat = function() {
+                $scope.load = true;
+                $scope.cat = $routeParams.id;
+                Series.query({
+                    "info.categorias": $scope.cat
+                }, {
+                    fields: {
+                        "title": 1,
+                        "hashid": 1,
+                        "img": 1
+                    }
+                }).then(function(series) {
+                    $scope.seriebycat = series;
+                    // window.localStorage[window.vbase + '_ms_sy'] = JSON.stringify($scope.currentseries);
+                    $scope.load = false;
+                });
+            };
+
             $scope.getseriebyyear = function(year) {
                 $scope.load = true;
                 console.log($routeParams.id);
@@ -132,20 +153,36 @@
                 });
                 FB.XFBML.parse();
             };
+            $scope.getSeriesByCast = function(hash) {
+                alert(hash);
+            };
 
             $scope.getcast = function() {
                 $scope.load = true;
-                console.log($routeParams.id);
-                if (window.localStorage[window.vbase + '_' + $routeParams.id] !== undefined) {
-                    $scope.serie = JSON.parse(window.localStorage[$routeParams.id]);
-                    $scope.load = false;
-                }
-                Casting.getById($routeParams.id).then(function(cast) {
-                    $scope.cast = cast;
-                    // window.localStorage[window.vbase + '_' + $routeParams.id] = JSON.stringify($scope.cast);
-                    $scope.load = false;
+                $scope.casthashid = $routeParams.id;
+                Casting.query({
+                    "hashid": $scope.casthashid
+                }).then(function(cast) {
+                    if (cast.length !== 0) {
+                        $scope.cast = cast[0];
+                        Series.query({
+                            "info.casting.hashid": $scope.cast.hashid
+                        }, {
+                            fields: {
+                                "title": 1,
+                                "hashid": 1,
+                                "img": 1
+                            }
+                        }).then(function(series) {
+                            $scope.cast.series = series;
+                        });
+                        // window.localStorage[window.vbase + '_' + $routeParams.id] = JSON.stringify($scope.cast);
+                        $scope.load = false;
+                    } else {
+                        window.location = './';
+                    }
                 });
-                FB.XFBML.parse();
+                // FB.XFBML.parse();
             };
 
             $scope.showepisode = function() {

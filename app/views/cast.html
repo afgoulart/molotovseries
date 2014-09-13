@@ -4,10 +4,10 @@
             <div class="avatar">
                 <figure>
                     <a href="#">
-                        <img ng-src="{{cast.http://ia.media-imdb.com/images/M/MV5BMjMyMzA1MTY2MV5BMl5BanBnXkFtZTgwMzIyNzQ3MDE@._V1_SY317_CR25,0,214,317_AL_.jpg}}" width="200" alt="">
+                        <img ng-src="{{cast.img}}" style="width:100%" alt="">
                     </a>
                 </figure>
-                <h5>{{serie.title}}</h5>
+                <h5>{{cast.nome}}</h5>
                 <p>
                     <a href="#">curtir</a>
                 </p>
@@ -18,15 +18,35 @@
                 <div class="clearfix">
                     <div class="fb-like" data-href="http://localhost/molotovseries/#!/serie/{{serie._id.$oid}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
                 </div>
-                <div class="blogmetas">
-                    <h2 class="heading">Sinopse</h2>
-                </div>
+                <h2 class="heading">{{cast.nome}}</h2>
                 <p style="text-align:justify">
-                    {{serie.sinopse}}
+                    {{cast.descricao}}
                 </p>
                 <hr>
-
+                <p>
+                    Nasceu: {{cast.nascimentodtano}} em {{cast.nascimentolocal}}
+                </p>
                 <hr>
+                <div class="row">
+                    <h5>Séries</h5>
+                    <table class="table table-hover table-condensed">
+                        <tbody>
+                            <tr ng-repeat="s in cast.series">
+                                <td style="width:100px">
+                                    <a ng-href="#!/serie/{{s._id.$oid}}" class="lightbox-gallery" ng-click="load = true">
+                                        <img style="width:auto%; height:auto" bn-lazy-src="{{s.img}}" id="{{s.hashid}}" alt="{{s.nome}}" class="img-responsive hovereffect imageCache">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a ng-href="#!/serie/{{s._id.$oid}}">
+                                        <h5>{{s.title}}</h5>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
                 <h5>Conte-nos o que você acha dessa celebridade</h5>
                 <div class="row">
                     <div class="fb-comments" style="width:100%" data-href="http://molotovseries.com/#!/serie/5408084ff72cbdb533247a25" data-numposts="5" data-colorscheme="light"></div>
