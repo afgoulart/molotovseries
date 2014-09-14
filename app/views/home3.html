@@ -17,13 +17,18 @@ h1 {
     margin: 0;
     padding: 0;
 }
+.breadcrumb{
+    margin:0;
+    padding:0;
+    color: white;
+}
 </style>
 
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div style="display:box;" ng-init="getbirthday()" ng-hide="load">
             <!-- <h2>Séries 2014</h2> -->
-            <ol class="breadcrumb">
+            <ol align="center" class="breadcrumb">
                 <li>
                     <a href="#">
                         <h3>Aniversariantes do dia</h3>
@@ -35,7 +40,7 @@ h1 {
             <div class="row">
                 <figure class="col-md-1 element-item gallery" data-category="{{s.nascimentodt}}" ng-repeat="s in currentbirthday">
                     <a ng-href="#!/casting/{{s.hashid}}" class="lightbox-gallery" ng-click="load = true">
-                        <img style="width:100%; height:100%" bn-lazy-src="{{s.img}}" id="{{s.hashid}}" alt="{{s.nome}}" class="img-responsive hovereffect imageCache">
+                        <img style="width:100%; height:100%" bn-lazy-src="http://imagizer.imageshack.us/300x300/{{s.img}}" id="{{s.hashid}}" alt="{{s.nome}}" class="img-responsive hovereffect imageCache">
                     </a>
                     <figcaption class="backcolor">
                         <a ng-href="#!/casting/{{s.hashid}}">{{s.nome}}</a>
@@ -45,7 +50,13 @@ h1 {
             <hr>
         </div>
         <div ng-init="getseriebyyear('2014')" ng-hide="load">
-            <h2>Séries 2014</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <h3>Séries 2014</h3>
+                    </a>
+                </li>
+            </ol>
             <hr>
             <figure class="element-item gallery" data-category="{{s.title}}" ng-repeat="s in currentseries">
                 <a ng-href="#!/serie/{{s._id.$oid}}" class="lightbox-gallery" ng-click="load = true">

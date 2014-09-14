@@ -15,15 +15,45 @@
 }
 </style>
 <div ng-init="getseriebycat()" ng-hide="load">
-    <h2 style="color:#d10909">Séries na categoria: <u> {{cat}}</u></h2>
+    <h2 style="color:#d10909;float:left">Séries na categoria: <u></h2>
+
+    <select style="float:left;width:20%;margin-left:1%;margin-top:1.2%" class="col-xs-3 form-control" ng-model="cat" ng-change="getseriebycat(cat)">
+        <option>Drama</option>
+        <option>Horror</option>
+        <option>Thriller</option>
+        <option>Adventure</option>
+        <option>Fantasy</option>
+        <option>Action</option>
+        <option>Crime</option>
+        <option>Sci-Fi</option>
+        <option>Comedy</option>
+        <option>Mystery</option>
+        <option>Music</option>
+        <option>Romance</option>
+        <option>Biography</option>
+        <option>News</option>
+        <option>History</option>
+        <option>War</option>
+        <option>Documentary</option>
+        <option>Family</option>
+        <option>Short</option>
+        <option>Sport</option>
+        <option>Animation</option>
+        <option>Western</option>
+        <option>Reality-TV</option>
+        <option>Musical</option>
+        <option>Talk-Show</option>
+        <option>Game-Show</option>
+    </select></u>
+    <div class="clearfix"></div>
+
     <hr>
     <figure class="element-item gallery" data-category="{{s.title}}" ng-repeat="s in seriebycat">
         <a ng-href="#!/serie/{{s._id.$oid}}" class="lightbox-gallery" ng-click="load = true">
             <img style="width:100%; height:100%" bn-lazy-src="{{s.img}}" id="{{s.hashid}}" alt="{{s.title}}" class="img-responsive hovereffect imageCache">
         </a>
         <figcaption class="backcolor">
-            <h4><a ng-href="#!/serie/{{s._id.$oid}}">{{s.title}}</a>
-            </h4>
+            <a ng-href="#!/serie/{{s._id.$oid}}">{{s.title}} <br> {{s.ano}}</a>
         </figcaption>
     </figure>
 </div>

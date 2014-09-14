@@ -4,7 +4,7 @@
             <div class="avatar">
                 <figure>
                     <a href="#">
-                        <img ng-src="{{cast.img}}" style="width:100%" alt="">
+                        <img ng-src="http://imagizer.imageshack.us/300x300/{{cast.img}}" style="width:100%" alt="">
                     </a>
                 </figure>
                 <h5>{{cast.nome}}</h5>
@@ -34,7 +34,7 @@
                             <tr ng-repeat="s in cast.series">
                                 <td style="width:100px">
                                     <a ng-href="#!/serie/{{s._id.$oid}}" class="lightbox-gallery" ng-click="load = true">
-                                        <img style="width:auto%; height:auto" bn-lazy-src="{{s.img}}" id="{{s.hashid}}" alt="{{s.nome}}" class="img-responsive hovereffect imageCache">
+                                        <img style="width:auto%; height:auto" bn-lazy-src="http://imagizer.imageshack.us/300x300/{{s.img}}" id="{{s.hashid}}" alt="{{s.nome}}" class="img-responsive hovereffect imageCache">
                                     </a>
                                 </td>
                                 <td>

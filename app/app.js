@@ -64,26 +64,26 @@
             /**/
             $scope.getAll = function() {
                 $scope.load = true;
-                if (window.localStorage[window.vbase + '_ms_ss'] !== undefined) {
-                    $scope.series = JSON.parse(window.localStorage[window.vbase + 'ms_ss']);
+                // if (window.localStorage[window.vbase + '_ms_ss'] !== undefined) {
+                //     $scope.series = JSON.parse(window.localStorage[window.vbase + 'ms_ss']);
+                //     $scope.load = false;
+                // } else {
+                Series.all({
+                    fields: {
+                        "title": 1,
+                        "hashid": 1,
+                        "img": 1
+                    },
+                    sort: {
+                        // "title": 1
+                    }
+                }).then(function(series) {
+                    // console.log( === undefined ? );
+                    $scope.series = series;
+                    // window.localStorage[window.vbase + '_ms_ss'] = JSON.stringify($scope.series);
                     $scope.load = false;
-                } else {
-                    Series.all({
-                        fields: {
-                            "title": 1,
-                            "hashid": 1,
-                            "img": 1
-                        },
-                        sort: {
-                            // "title": 1
-                        }
-                    }).then(function(series) {
-                        // console.log( === undefined ? );
-                        $scope.series = series;
-                        // window.localStorage[window.vbase + '_ms_ss'] = JSON.stringify($scope.series);
-                        $scope.load = false;
-                    });
-                }
+                });
+                // }
             };
 
             $scope.getbirthday = function(year) {
@@ -103,16 +103,24 @@
                 }
 
             };
-            $scope.getseriebycat = function() {
+            $scope.getseriebycat = function(c) {
                 $scope.load = true;
-                $scope.cat = $routeParams.id;
+                if (c !== undefined) {
+                    $scope.cat = c;
+                } else {
+                    $scope.cat = $routeParams.id;
+                }
                 Series.query({
                     "info.categorias": $scope.cat
                 }, {
                     fields: {
                         "title": 1,
                         "hashid": 1,
-                        "img": 1
+                        "img": 1,
+                        "ano": 1
+                    },
+                    sort: {
+                        "ano": -1
                     }
                 }).then(function(series) {
                     $scope.seriebycat = series;
@@ -136,7 +144,10 @@
                         $scope.load = false;
                     });
                 }
-                // FB.XFBML.parse();
+                try {
+
+                    FB.XFBML.parse();
+                } catch (e) {}
             };
 
             $scope.getserie = function() {
@@ -182,7 +193,10 @@
                         window.location = './';
                     }
                 });
-                // FB.XFBML.parse();
+                try {
+
+                    FB.XFBML.parse();
+                } catch (e) {}
             };
 
             $scope.showepisode = function() {

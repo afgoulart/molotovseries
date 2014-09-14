@@ -17,6 +17,23 @@ h1 {
     margin: 0;
     padding: 0;
 }
+.nav-tabs {
+    border-bottom: 0px solid #ddd;
+    background: white;
+}
+.nav-tabs > li {
+    border: 1px solid #ddd;
+}
+.nav-tabs > li > a {
+    padding: 10px;
+}
+.interactivetabs .nav-tabs > li a {
+    color: black;
+}
+.interactivetabs .nav-tabs > li.active a {
+    color: white;
+}
+
 </style>
 <div class="blogdetail sections already-visible come-in" ng-init="getserie();" ng-hide="load">
     <div class="row">
@@ -37,69 +54,60 @@ h1 {
                     <div class="fb-like" data-href="http://localhost/molotovseries/#!/serie/{{serie._id.$oid}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true" style="float:left"></div>
                 </h2>
                 <a ng-href="#!/seriebycat/{{c}}" class="btn btn-primary btn-xs backcolor" ng-repeat="c in serie.info.categorias" style="margin-right:1%">{{c}}</a>
-                <h2 class="heading">Sinopse</h2>
-                <p style="text-align:justify">
-
-                </p>
-                <p style="text-align:justify">
-                    {{serie.sinopse}}
-                    <br>
-                    <h6>Time: {{serie.info.time}}</h6>
-                </p>
                 <hr>
-                <div class="row">
-                    <h5>Criadores</h5>
-                    <a ng-href="#!/cast/{{c.hashid}}" class="btn" ng-repeat="c in serie.info.creators" style="margin-right:1%">{{c.nome}} (?)</a>
-                </div>
-                <div class="row">
-                    <h5>Casting</h5>
-                    <table class="table table-hover table-condensed">
-                        <tbody>
-                            <tr ng-repeat="s in serie.info.casting">
-                                <td style="width:60px">
-                                    <a ng-href="#!/casting/{{s.hashid}}" class="lightbox-gallery" ng-click="load = true">
-                                        <img style="width:auto%; height:auto" bn-lazy-src="{{s.img}}" id="{{s.hashid}}" alt="{{s.nome}}" class="img-responsive hovereffect imageCache">
-                                    </a>
-                                </td>
-                                <td>
-                                    <a ng-href="#!/casting/{{s.hashid}}">
-                                        <h5>{{s.nome}}</h5>
-                                    </a>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                    <!-- <figure class="col-md-1 element-item gallery" data-category="{{s.hashid}}" ng-repeat="s in serie.info.casting">
-                        <a ng-href="#!/casting/{{s.hashid}}" class="lightbox-gallery" ng-click="load = true">
-                            <img style="width:100%; height:100%" bn-lazy-src="{{s.img}}" id="{{s.hashid}}" alt="{{s.nome}}" class="img-responsive hovereffect imageCache">
-                        </a>
-                        <figcaption class="backcolor">
-                            <a ng-href="#!/casting/{{s.hashid}}">{{s.nome}}</a>
-                        </figcaption>
-                    </figure> -->
-                </div>
-                <div class="tabsect">
-                    <ul class="nav nav-tabs" id="newTab">
-                        <li ng-class="{active: $index == 0}" ng-repeat="_temp in serie.temporadas"><a ng-href="#{{$index}}_temporada" data-toggle="tab">{{$index+1}}ª Temporada</a>
+                <div class="interactivetabs">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" style="background: white;">
+                        <li class="active"><a href="#info" data-toggle="tab">Informações</a>
+                        </li>
+                        <li class=""><a href="#temps" data-toggle="tab">Temporadas</a>
                         </li>
                     </ul>
+                    <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane " ng-class="{active: $index == 0}" ng-repeat="_temp in serie.temporadas" id="{{$index}}_temporada">
+                        <div class="tab-pane fade active in" id="info">
+
+                            <h2 class="heading">Sinopse</h2>
+                            <p style="text-align:justify">
+
+                            </p>
+                            <p style="text-align:justify">
+                                {{serie.sinopse}}
+                                <br>
+                                <h6>Time: {{serie.info.time}}</h6>
+                            </p>
+                            <hr>
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-repeat="t in _temp">
-                                    <h4>{{t.title}}</h4>
-                                    <ul class="list-group" ng-repeat="episodio in t.episodios">
-                                        <li class="list-group-item">{{episodio.title}}
-                                            <br>
-                                            <a class="btn btn-primary btn-xs backcolor" ng-href="#!/show/{{serie._id.$oid}}?t={{t.temp}}&e={{episodio.title}}&i={{serie._id.$oid}}&k={{l.id}}&p={{l.player}}" ng-click="load = true;" ng-repeat="l in episodio.link" style="margin-right:1%;">{{l.player}}</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <h5>Criadores</h5>
+                                <a ng-href="#!/casting/{{c.hashid}}" class="btn" ng-repeat="c in serie.info.creators" style="margin-right:1%">{{c.nome}} (?)</a>
                             </div>
+                            <div class="row">
+                                <h5>Casting</h5>
+                                <table class="table table-hover table-condensed">
+                                    <tbody>
+                                        <tr ng-repeat="s in serie.info.casting">
+                                            <td style="width:60px">
+                                                <a ng-href="#!/casting/{{s.hashid}}" class="lightbox-gallery" ng-click="load = true">
+                                                    <img style="width:auto%; height:auto" bn-lazy-src=" http://imagizer.imageshack.us/50x50/{{s.img}}" id="{{s.hashid}}" alt="{{s.nome}}" class="img-responsive hovereffect imageCache">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a ng-href="#!/casting/{{s.hashid}}">
+                                                    <h5>{{s.nome}}</h5>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="temps">
+                            
+
                         </div>
                     </div>
                 </div>
+
                 <hr>
                 <h5>Conte-nos o que você acha dessa série</h5>
                 <div class="row">
