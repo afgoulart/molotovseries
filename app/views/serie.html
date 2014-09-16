@@ -33,7 +33,71 @@ h1 {
 .interactivetabs .nav-tabs > li.active a {
     color: white;
 }
+</style>
+<style>
+.v-tab .tab__head {
+    margin: 0;
+    padding: 0;
+    float: left;
+    list-style: none;
+    /* height: 32px; */
+    width: 100%;
+}
+.v-tab .tab__head li {
+    float: left;
+    /*margin-left:1%;*/
+    padding-left: 1%;
+    /*margin: 0 0 1px 0;*/
+    cursor: pointer;
+    /*padding: 0px 10%;*/
+    height: 32px;
+    line-height: 31px;
+    color: #333;
+    border-bottom: 0px;
+    overflow: hidden;
+    position: relative;
+    /*border-top-left-radius: 4px;*/
+    /*border-bottom-left-radius: 4px;*/
+    background-color: #e5e5e5;
+    width: 10%;
+    border: 1px solid #ccc;
+}
+@media (max-width: 625px) {
+    /*.v-tab .tab__head li{
+    width: 100%;
 
+  }*/
+    .interactivetabs .nav-tabs > li {
+        width: 100%;
+    }
+}
+.v-tab .tab__head li:hover {
+    background-color: #bbb;
+    color: #000;
+}
+.v-tab .tab__head li.active {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    /*border-right: 0;*/
+    display: block;
+}
+.v-tab .tab__container {
+    border: 1px solid #ccc;
+    float: left;
+    width: 100%;
+    min-height: 200px;
+}
+.v-tab .tab__content {
+    padding: 20px;
+    display: none;
+}
+.v-tab .tab__content >:first-child {
+    margin-top: 0;
+}
+.show {
+    display: block;
+}
 </style>
 <div class="blogdetail sections already-visible come-in" ng-init="getserie();" ng-hide="load">
     <div class="row">
@@ -60,7 +124,9 @@ h1 {
                     <ul class="nav nav-tabs" style="background: white;">
                         <li class="active"><a href="#info" data-toggle="tab">Informações</a>
                         </li>
-                        <li class=""><a href="#temps" data-toggle="tab">Temporadas</a>
+                        <li class=""><a href="#temps_leg" data-toggle="tab">Temporadas Legendado ({{serie.legendado.length}})</a>
+                        </li>
+                        <li class=""><a href="#temps_dub" data-toggle="tab">Temporadas Dublado ({{serie.dublado.length}})</a>
                         </li>
                     </ul>
                     <!-- Tab panes -->
@@ -101,13 +167,81 @@ h1 {
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="temps">
-                            
+                        <div class="tab-pane fade" id="temps_leg">
+                            <div class="v-tab">
+                                <br>
+                                <ul class="tab__head">
+                                    <li ng-class="{active:$first}" ng-repeat="t in [] | range:serie.numtemporadas" rel="ltab{{$index}}" onclick="showtemp(this)">
+                                        <h6>{{$index+1}} ª Temp</h6>
+                                    </li>
+                                </ul>
 
+                                <div class="tab__container">
+                                    <div id="ltab{{$index}}" ng-repeat="t in serie.legendado" class="tab__content" ng-class="{show:$first}">
+                                        <div class="sections already-visible come-in" style="padding:0;">
+                                            <h2 class="heading ng-binding" style="padding: 0;margin: 0;">{{t.title}}</h2>
+
+                                            <div class="clearfix"></div>
+                                            <div class="media" ng-repeat="(i,ep) in t.episodios">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">{{ep.title}}</h4>
+                                                    <p>
+                                                        <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{i}}&info={{ep.hashid}}" ng-repeat="l in ep.link" class="btn btn-primary btn-xs backcolor" style="margin-right:1%">{{l.player}}</a>
+                                                    </p>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <br>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="temps_dub">
+                            <br>
+                            <div ng-show="serie.dublado.length==0" class="alert alert-warning fade in">
+                                <p>Nenhuma temporada dublada disponível</p>
+                            </div>
+                            <div class="v-tab" ng-hide="serie.dublado.length==0">
+                                <ul class="tab__head">
+                                    <li ng-class="{active:$first}" ng-repeat="t in serie.dublado" rel="dtab{{$index}}" onclick="showtemp(this)">
+                                        <h6>{{$index+1}} ª Temp</h6>
+                                    </li>
+                                </ul>
+
+                                <div class="tab__container">
+                                    <div id="dtab{{$index}}" ng-repeat="t in serie.dublado" class="tab__content" ng-class="{show:$first}">
+                                        <div class="sections already-visible come-in" style="padding:0;">
+                                            <h2 class="heading ng-binding" style="padding: 0;margin: 0;">{{t.title}}</h2>
+
+                                            <div class="clearfix"></div>
+                                            <div class="media" ng-repeat="ep in t.episodios">
+                                                <!--   <a href="#" class="pull-left">
+                                                    <img alt="" class="media-object" src="images/img1.jpg">
+                                                </a> -->
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">{{ep.title}}</h4>
+                                                    <p>
+                                                        <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{$index}}&info={{ep.hashid}}" ng-repeat="l in ep.link" class="btn btn-primary btn-xs backcolor" style="margin-right:1%">{{l.player}}</a>
+                                                    </p>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <br>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
+                <div class="clearfix"></div>
                 <hr>
                 <h5>Conte-nos o que você acha dessa série</h5>
                 <div class="row">
@@ -117,3 +251,14 @@ h1 {
         </div>
     </div>
 </div>
+
+<script>
+function showtemp(tab) {
+    $(".tab__content").hide();
+    $(".tab__content").removeClass('show');
+    var activeTab = $(tab).attr("rel");
+    $("#" + activeTab).fadeIn();
+    $(".tab__head li").removeClass("active");
+    $(tab).addClass("active");
+}
+</script>

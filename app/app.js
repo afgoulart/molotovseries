@@ -91,16 +91,14 @@
                 if (window.localStorage[window.vbase + '_ms_bd'] !== undefined) {
                     $scope.currentbirthday = JSON.parse(window.localStorage[window.vbase + '_ms_bd']);
                     $scope.load = false;
-                } else {
-
-                    Casting.query({
-                        "nascimentodt": d
-                    }).then(function(birthday) {
-                        $scope.currentbirthday = birthday;
-                        window.localStorage[window.vbase + '_ms_bd'] = JSON.stringify($scope.currentbirthday);
-                        $scope.load = false;
-                    });
                 }
+                Casting.query({
+                    "nascimentodt": d
+                }).then(function(birthday) {
+                    $scope.currentbirthday = birthday;
+                    window.localStorage[window.vbase + '_ms_bd'] = JSON.stringify($scope.currentbirthday);
+                    $scope.load = false;
+                });
 
             };
             $scope.getseriebycat = function(c) {
@@ -142,6 +140,7 @@
                         $scope.currentseries = series;
                         // window.localStorage[window.vbase + '_ms_sy'] = JSON.stringify($scope.currentseries);
                         $scope.load = false;
+                        $("#loadcurrentseries").hide();
                     });
                 }
                 try {
@@ -156,13 +155,22 @@
                 if (window.localStorage[window.vbase + '_' + $routeParams.id] !== undefined) {
                     $scope.serie = JSON.parse(window.localStorage[$routeParams.id]);
                     $scope.load = false;
+                    if ($scope.serie.dublado === undefined) {
+                        $scope.serie.dublado = [];
+                    }
                 }
                 Series.getById($routeParams.id).then(function(serie) {
                     $scope.serie = serie;
                     // window.localStorage[window.vbase + '_' + $routeParams.id] = JSON.stringify($scope.serie);
                     $scope.load = false;
+                    if ($scope.serie.dublado === undefined) {
+                        $scope.serie.dublado = [];
+                    }
                 });
-                FB.XFBML.parse();
+
+                try {
+                    FB.XFBML.parse();
+                } catch (e) {}
             };
             $scope.getSeriesByCast = function(hash) {
                 alert(hash);
@@ -199,23 +207,46 @@
                 } catch (e) {}
             };
 
+            $scope.showtemp = function(i) {
+                alert('s');
+                $(".tab__content").hide();
+                $("#tab" + i).fadeIn();
+                $(".tab__head li").removeClass("active");
+                $(this).addClass("active");
+            };
             $scope.showepisode = function() {
                 $scope.load = true;
 
                 var k = getParam('k');
                 var id = getParam('i');
                 var p = getParam('p');
+                var info = getParam('info');
                 console.log(k);
                 Series.getById($routeParams.id).then(function(serie) {
                     $scope.serie = serie;
                     $scope.load = false;
                     var PLAYERS = {
                         dp: "http://dropvideo.com/embed/{{id}}/",
-                        vdm: "http://vidto.me/embed-{{id}}-1280x720.html",
+                        vdm: "http://vidto.me/embed-{{id}}-967x600.html",
                         amv: "http://allmyvideos.net/embed-{{id}}.html"
                     };
                     $scope.serie.currentlink = PLAYERS[p].replace("{{id}}", k);
+                    $scope.serie.episodio = info;
+                    try {
+                        var type = info.split('_');
+                        var _eps = $scope.serie[type[1]];
+                        var ep = _eps[type[0] - 1].episodios[id];
+                        $scope.serie.episodio = ep;
+                    } catch (e) {
+                        console.log(e);
+                    }
+                    // <iframe width="200" height="113" src="http://vidto.me/embed-2zljuqgw21mc-200x113.html" frameborder="0" allowfullscreen></iframe>
+                    // $("#player").load($scope.serie.currentlink + " #flvplayer_wrapper");
                 });
+                try {
+
+                    FB.XFBML.parse();
+                } catch (e) {}
             };
 
             $scope.loadoff = function() {
@@ -264,6 +295,14 @@
         }
     ]);
 
+    window.molotov.filter('range', function() {
+        return function(input, total) {
+            total = parseInt(total);
+            for (var i = 0; i < total; i++)
+                input.push(i);
+            return input;
+        };
+    });
     window.molotov.directive(
         "bnLazySrc",
         function($window, $document) {

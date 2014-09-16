@@ -27,8 +27,8 @@
                     Nasceu: {{cast.nascimentodtano}} em {{cast.nascimentolocal}}
                 </p>
                 <hr>
-                <div class="row">
-                    <h5>Séries</h5>
+                <div class="row" ng-show="cast.series.length">
+                    <h5>Participações:</h5>
                     <table class="table table-hover table-condensed">
                         <tbody>
                             <tr ng-repeat="s in cast.series">

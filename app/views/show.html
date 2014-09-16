@@ -1,8 +1,31 @@
+<style>
+#flvplayer_wrapper {
+    position: static;
+    width: 100%;
+    height: 720px;
+}
+</style>
 <div class="sections already-visible come-in" ng-init="showepisode()" ng-hide="load">
-    <h2 class="heading" style="margin-top:-3%">{{serie.title}} - {{episode}}</h2>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ol class="breadcrumb">
+            <li><a ng-href="#!/all">Todas as Séries</a>
+            </li>
+            <li><a ng-href="#!/serie/{{serie._id.$oid}}">{{serie.title}}</a>
+            </li>
+            <li class="active">{{serie.episodio.title}}</li>
+        </ol>
+    </div>
+    <h2 class="heading" style="margin-top:-3%">{{serie.title}} - {{serie.episodio.title}}
+     <div class="fb-like" data-href="http://localhost/molotovseries/#!/serie/{{serie._id.$oid}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true" style="float:left"></div></h2>
+     <p>Deseja trocar de player? <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{$index}}&info={{serie.episodio.hashid}}" ng-repeat="l in serie.episodio.link" class="btn btn-primary btn-xs backcolor" style="margin-right:1%">{{l.player}}</a></p>
     <div class="row">
-        <iframe class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="width:100%;height:600px;border:1px solid grey" ng-src="{{serie.currentlink | trusted}}" frameborder="1" allowfullscreen>
-
+        <div id="loading" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 alert alert-warning fade in">
+            <h6>Carregando Episódio... aguarde</h6>
+            <img src="assets/images/loading.gif" alt="">
+        </div>
+    </div>
+    <div id="player" class="row" style="display:none">
+        <iframe id="iplayer" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="width:100%;height:600px;border:0px solid grey" ng-src="{{serie.currentlink | trusted}}" frameborder="0" allowfullscreen>
         </iframe>
     </div>
     <hr>
@@ -13,10 +36,16 @@
 </div>
 
 <script>
-$(window).load(function() {
-    $('iframe').contents().find('a').click(function(event) {
-        alert("demo only");
-        event.preventDefault();
-    });
+$('iframe').load(function() {
+    // jwplayer().play();
+    $("#loading").hide();
+    $("#player").show();
+    // $("iframe #flvplayer_wrapper").attr('style', 'position: static;width: 100%;height: 720px;');
+    // alert($("iframe #flvplayer_wrapper").attr('style'));
 });
+
+
+// $(window).load(function() {
+
+// });
 </script>
