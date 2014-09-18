@@ -6,6 +6,10 @@
     <title>Molotov Series</title>
     <!--// Responsive //-->
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <meta name="robots" content="*">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1,requiresActiveX=true">
+
+    <link rel="search" title="" type="application/opensearchdescription+xml" href="">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -64,7 +68,7 @@
                             <i> <h6>O primeiro portal de séries totalmente Open-source</h6></i>
                         </div>
                         <div align="center" style="padding:0;margin:0;margin-top:-2%;margin-bottom:1%; display:block" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <a class="socialbox facebook " alt="Entrar com o facebook" href="javascript:void(0)" ng-click="login()">
+                            <a class="socialbox facebook " alt="Entrar com o facebook" href="javascript:void(0)" ng-click="login()" ng-hide="loginStatusb">
                                 <div class="social-icon">
                                     <i class="fa fa-fw fa-facebook"></i>
                                 </div>
@@ -74,6 +78,10 @@
                                     <span class="ng-binding-likes">E aproveite todos os nossos recursos</span>
                                 </div>
                             </a>
+                            <!-- <a href="javascript:void(0)" ng-click="removeAuth();">REMOVER</a> -->
+                            <!-- <a href="javascript:void(0)" ng-click="logout();">logout</a> -->
+                            <!-- <a href="javascript:void(0)" ng-click="api();">api</a> -->
+                            <!-- <br>{{facebookIsReady}} -->
                             <!-- <button type="button" id="login" >login</button> -->
                             <!-- <button type="button" id="logout" ng-click="logout()">logout</button> -->
                             <!-- <button type="button" id="api" ng-click="api()">api user data call</button> -->
@@ -203,44 +211,6 @@
     <!--<script type="text/javascript" src="assets/js/rsvp-latest.min.js"></script>
     <script type="text/javascript" src="assets/js/basket.min.js"></script>-->
     <script>
-    // basket.add({ url: 'assets/js/jquery-2.0.3.min.js'});
-    // basket.add({ url: 'assets/js/underscore-min.js'});
-    // basket.add({ url: 'assets/js/angular/angular.js'}).then(function(){
-    // basket.add({ url: 'assets/js/angular/angular-route.js'});
-    // basket.add({ url: 'assets/js/angular-facebook.js'});
-    // basket.add({ url: 'app/app.js'});
-    // });
-    // basket.add({ url: 'assets/js/isotope.pkgd.js'});
-    // basket.add({ url: 'assets/js/ng-isotope.js'});
-    // basket.add({ url: 'assets/js/bootstrap.min.js'});
-    // basket.require({
-    //     url: 'assets/js/jquery-2.0.3.min.js'
-    // }).wait();
-    // basket.require({
-    //     url: 'assets/js/bootstrap.min.js'
-    // });
-    // basket.require({
-    //     url: 'assets/js/underscore-min.js'
-    // });
-    // basket.require({
-    //     url: 'assets/js/angular/angular.js'
-    // });
-    // basket.require({
-    //     url: 'assets/js/isotope.pkgd.js'
-    // });
-    // basket.require({
-    //     url: 'assets/js/ng-isotope.js'
-    // })
-    // basket.require({
-    //     url: 'assets/js/angular/angular-route.js'
-    // });
-    // basket.require({
-    //     url: 'assets/js/angular-facebook.js'
-    // })
-    // basket.require({
-    //     url: 'app/app.js',
-    //     skipCache: true
-    // });
     </script>
     <script type="text/javascript" src="assets/js/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="assets/js/angular/angular.js"></script>
@@ -252,7 +222,72 @@
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/js/angular-facebook.js"></script>
     <script type="text/javascript" src="assets/js/h5utils.js"></script>
+    <script type="text/javascript" src="assets/js/ng-infinite-scroll.min.js"></script>
     <script type="text/javascript" src="app/app.js"></script>
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    <script>
+    var _gaq = [
+        ['_setAccount', 'UA-54880030-1'],
+        ['_trackPageview']
+    ];
+    (function(d, t) {
+        var g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        g.src = '//www.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g, s);
+    }(document, 'script'));
+    // Track JavaScript errors in Google Analytics
+    (function(window) {
+        var undefined,
+            link = function(href) {
+                var a = window.document.createElement('a');
+                a.href = href;
+                return a;
+            };
+        window.onerror = function(message, file, line, column) {
+            var host = link(file).hostname;
+            _gaq.push([
+                '_trackEvent', (host == window.location.hostname || host == undefined || host == '' ? '' : 'external ') + 'error',
+                message, file + ' LINE: ' + line + (column ? ' COLUMN: ' + column : ''), undefined, undefined, true
+            ]);
+        };
+    }(window));
+    // Track page scroll
+    $(function() {
+        var isDuplicateScrollEvent,
+            scrollTimeStart = new Date,
+            $window = $(window),
+            $document = $(document),
+            scrollPercent;
+
+        $window.scroll(function() {
+            scrollPercent = Math.round(100 * ($window.height() + $window.scrollTop()) / $document.height());
+            if (scrollPercent > 90 && !isDuplicateScrollEvent) { //page scrolled to 90%
+                isDuplicateScrollEvent = 1;
+                _gaq.push(['_trackEvent', 'scroll',
+                    'Window: ' + $window.height() + 'px; Document: ' + $document.height() + 'px; Time: ' + Math.round((new Date - scrollTimeStart) / 1000, 1) + 's',
+                    undefined, undefined, true
+                ]);
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>

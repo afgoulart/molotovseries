@@ -3,7 +3,7 @@
     window.appversion = '0.1';
     window.online = true;
     window.vbase = '0.1';
-    window.molotov = angular.module('Molotov', ['ngRoute', 'mongolabResourceHttp', 'ng-isotope', 'facebook']);
+    window.molotov = angular.module('Molotov', ['ngRoute', 'mongolabResourceHttp', 'ng-isotope', 'facebook', 'infinite-scroll']);
     window.molotov.config(function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
@@ -30,15 +30,16 @@
             .otherwise({
                 redirectTo: '/'
             });
-        // $locationProvider.html5Mode(true);
+        /*$locationProvider.html5Mode(true);*/
         $locationProvider.hashPrefix('!');
-        /**/
 
     });
     window.molotov.config(function(FacebookProvider) {
-        // console.log('location.hostname', location.hostname);
-        // FacebookProvider.init('1501693240076943');
-        FacebookProvider.init('1501692520077015');
+        /*console.log('location.hostname', location.hostname);*/
+        /*dev*/
+        FacebookProvider.init('1501693240076943');
+        /*prod*/
+        /*FacebookProvider.init('1501692520077015');*/
     });
     window.molotov.constant('MONGOLAB_CONFIG', {
         API_KEY: 'F1Fk9-FjLLrA4c62rbTuCDmgkGg0sE4A',
@@ -50,6 +51,9 @@
     window.molotov.factory('Casting', function($mongolabResourceHttp) {
         return $mongolabResourceHttp('casting');
     });
+    window.molotov.factory('Client', function($mongolabResourceHttp) {
+        return $mongolabResourceHttp('client');
+    });
     window.molotov.filter('trusted', ['$sce',
         function($sce) {
             return function(url) {
@@ -57,36 +61,31 @@
             };
         }
     ]);
-    window.molotov.controller('MolotovController', ['$scope', '$http', '$routeParams', 'Series', 'Casting', 'Facebook',
-        function($scope, $http, $routeParams, Series, Casting, Facebook) {
+    window.molotov.controller('MolotovController', ['$scope', '$http', '$routeParams', 'Series', 'Casting', 'Client', 'Facebook', 'AllSeries',
+        function($scope, $http, $routeParams, Series, Casting, Client, Facebook, AllSeries) {
             $scope.series = [];
             $scope.load = true;
-            /**/
-            $scope.getAll = function() {
-                $scope.load = true;
-                // if (window.localStorage[window.vbase + '_ms_ss'] !== undefined) {
-                //     $scope.series = JSON.parse(window.localStorage[window.vbase + 'ms_ss']);
-                //     $scope.load = false;
-                // } else {
-                Series.all({
-                    fields: {
-                        "title": 1,
-                        "hashid": 1,
-                        "img": 1
-                    },
-                    sort: {
-                        // "title": 1
-                    }
-                }).then(function(series) {
-                    // console.log( === undefined ? );
-                    $scope.series = series;
-                    // window.localStorage[window.vbase + '_ms_ss'] = JSON.stringify($scope.series);
-                    $scope.load = false;
-                });
-                // }
-            };
+            $scope.limit = 10;
+            $scope.sk = 10;
+            $scope.allseries = new AllSeries();
 
+            $scope.stopLoad = function() {
+                $scope.load = false;
+            }
+            /**/
+            $scope.tracking = function() {
+                _gaq.push(['_trackPageview', window.location.href]);
+            };
+            $scope.cleanAll = function() {
+
+            };
             $scope.getbirthday = function(year) {
+                /**/
+                try {
+                    _gaq.push(['_trackEvent', 'getbirthday', year]);
+                } catch (e) {}
+                /**/
+
                 var d = (new Date().getMonth() + 1) + '-' + new Date().getDate();
                 if (window.localStorage[window.vbase + '_ms_bd'] !== undefined) {
                     $scope.currentbirthday = JSON.parse(window.localStorage[window.vbase + '_ms_bd']);
@@ -103,6 +102,11 @@
             };
             $scope.getseriebycat = function(c) {
                 $scope.load = true;
+                /**/
+                try {
+                    _gaq.push(['_trackEvent', 'getseriebycat', c]);
+                } catch (e) {}
+                /**/
                 if (c !== undefined) {
                     $scope.cat = c;
                 } else {
@@ -129,20 +133,24 @@
 
             $scope.getseriebyyear = function(year) {
                 $scope.load = true;
+                /**/
+                try {
+                    _gaq.push(['_trackEvent', 'getseriebyyear', year]);
+                } catch (e) {}
+                /**/
                 console.log($routeParams.id);
                 if (window.localStorage[window.vbase + '_ms_sy'] !== undefined) {
                     $scope.currentseries = JSON.parse(window.localStorage[window.vbase + '_ms_sy']);
                     $scope.load = false;
-                } else {
-                    Series.query({
-                        "ano": year
-                    }).then(function(series) {
-                        $scope.currentseries = series;
-                        // window.localStorage[window.vbase + '_ms_sy'] = JSON.stringify($scope.currentseries);
-                        $scope.load = false;
-                        $("#loadcurrentseries").hide();
-                    });
                 }
+                Series.query({
+                    "ano": year
+                }).then(function(series) {
+                    $scope.currentseries = series;
+                    window.localStorage[window.vbase + '_ms_sy'] = JSON.stringify($scope.currentseries);
+                    $scope.load = false;
+                    $("#loadcurrentseries").hide();
+                });
                 try {
 
                     FB.XFBML.parse();
@@ -152,6 +160,7 @@
             $scope.getserie = function() {
                 $scope.load = true;
                 console.log($routeParams.id);
+
                 if (window.localStorage[window.vbase + '_' + $routeParams.id] !== undefined) {
                     $scope.serie = JSON.parse(window.localStorage[$routeParams.id]);
                     $scope.load = false;
@@ -166,6 +175,11 @@
                     if ($scope.serie.dublado === undefined) {
                         $scope.serie.dublado = [];
                     }
+                    /**/
+                    try {
+                        _gaq.push(['_trackEvent', 'getserie', $scope.serie.title]);
+                    } catch (e) {}
+                    /**/
                 });
 
                 try {
@@ -197,6 +211,11 @@
                         });
                         // window.localStorage[window.vbase + '_' + $routeParams.id] = JSON.stringify($scope.cast);
                         $scope.load = false;
+                        /**/
+                        try {
+                            _gaq.push(['_trackEvent', 'getcast', $scope.cast.nome]);
+                        } catch (e) {}
+                        /**/
                     } else {
                         window.location = './';
                     }
@@ -240,6 +259,11 @@
                     } catch (e) {
                         console.log(e);
                     }
+                    /**/
+                    try {
+                        _gaq.push(['_trackEvent', 'showepisode', $scope.serie.episodio.title]);
+                    } catch (e) {}
+                    /**/
                     // <iframe width="200" height="113" src="http://vidto.me/embed-2zljuqgw21mc-200x113.html" frameborder="0" allowfullscreen></iframe>
                     // $("#player").load($scope.serie.currentlink + " #flvplayer_wrapper");
                 });
@@ -255,26 +279,50 @@
 
             /*FACEBOOK*/
             $scope.loginStatus = 'disconnected';
+            $scope.loginStatusb = false;
             $scope.facebookIsReady = false;
             $scope.user = null;
 
             $scope.login = function() {
                 Facebook.login(function(response) {
                     $scope.loginStatus = response.status;
+                    if ($scope.loginStatus === 'connected') {
+                        $scope.loginStatusb = true;
+                        $scope.api();
+                    } else {
+                        $scope.loginStatusb = false;
+                    }
+                    /**/
+                    try {
+                        _gaq.push(['_trackEvent', 'login', 'facebook']);
+                    } catch (e) {}
+                    /**/
                 });
             };
             $scope.logout = function() {
                 Facebook.logout(function(response) {
                     $scope.loginStatus = response.status;
+                    if ($scope.loginStatus === 'connected') {
+                        $scope.loginStatusb = true;
+                    } else {
+                        $scope.loginStatusb = false;
+                    }
                 });
             };
 
             $scope.removeAuth = function() {
+                console.log("removeAuth");
                 Facebook.api({
                     method: 'Auth.revokeAuthorization'
                 }, function(response) {
                     Facebook.getLoginStatus(function(response) {
                         $scope.loginStatus = response.status;
+                        console.log($scope.loginStatus);
+                        if ($scope.loginStatus === 'connected') {
+                            $scope.loginStatusb = true;
+                        } else {
+                            $scope.loginStatusb = false;
+                        }
                     });
                 });
             };
@@ -282,6 +330,25 @@
             $scope.api = function() {
                 Facebook.api('/me', function(response) {
                     $scope.user = response;
+                    console.log($scope.user);
+                    Client.query({
+                        "id": $scope.user.id
+                    }).then(function(result) {
+                        if (result.length === 0) {
+                            $scope.user.dtcreated = Date.now();
+                            var c = new Client($scope.user);
+                            var r = c.$saveOrUpdate();
+                            window.localStorage['u'] = JSON.stringify(r);
+                        } else {
+                            window.localStorage['u'] = JSON.stringify(result[0]);
+                        }
+                        /**/
+                        try {
+                            _gaq.push(['_trackEvent', 'user', $scope.user.id]);
+                        } catch (e) {}
+                        /**/
+                    });
+
                 });
             };
 
@@ -290,10 +357,69 @@
             }, function(newVal) {
                 if (newVal) {
                     $scope.facebookIsReady = true;
+                    Facebook.getLoginStatus(function(response) {
+                        $scope.loginStatus = response.status;
+                        console.log($scope.loginStatus);
+                        if ($scope.loginStatus === 'connected') {
+                            $scope.loginStatusb = true;
+                        }
+                    });
                 }
             });
+
+
         }
     ]);
+
+    // email: "jgabriel.ufpa@gmail.com"
+    // first_name: "J Gabriel"
+    // gender: "male"
+    // id: "904443389583831"
+    // last_name: "Lima"
+    // link: "https://www.facebook.com/app_scoped_user_id/904443389583831/"
+    // locale: "pt_BR"
+    // name: "J Gabriel Lima"
+    // timezone: -3
+    // updated_time: "2014-04-08T16:56:34+0000"
+    // verified: true
+    window.molotov.factory('AllSeries', function($http, Series) {
+        var AllSeries = function() {
+            this.items = [];
+            this.busy = false;
+            this.after = '';
+            this.limit = 20;
+            this.sk = 1;
+            this.stop = false;
+        };
+
+        AllSeries.prototype.nextPage = function() {
+            if (this.stop) return;
+            if (this.busy) return;
+            this.busy = true;
+            var a = this;
+            Series.all({
+                fields: {
+                    "title": 1,
+                    "hashid": 1,
+                    "img": 1
+                },
+                limit: a.limit,
+                skip: (a.sk * a.limit)
+            }).then(function(series) {
+                if (series.length !== 0) {
+                    _.each(series, function(value, index) {
+                        a.items.push(value);
+                    });
+                    a.sk++;
+                    a.busy = false;
+                } else {
+                    a.stop = true;
+                }
+            });
+        };
+
+        return AllSeries;
+    });
 
     window.molotov.filter('range', function() {
         return function(input, total) {
