@@ -2,7 +2,7 @@
     'use strict';
     window.appversion = '0.1';
     window.online = true;
-    window.vbase = '0.1';
+    window.vbase = '0.2';
     window.molotov = angular.module('Molotov', ['ngRoute', 'mongolabResourceHttp', 'ng-isotope', 'facebook', 'infinite-scroll']);
     window.molotov.config(function($routeProvider, $locationProvider) {
         $routeProvider
@@ -11,6 +11,9 @@
             })
             .when('/all', {
                 templateUrl: 'app/views/home.html'
+            })
+            .when('/seriesday', {
+                templateUrl: 'app/views/seriesday.html'
             })
             .when('/casting/:id', {
                 templateUrl: 'app/views/cast.html'
@@ -51,6 +54,9 @@
     window.molotov.factory('Casting', function($mongolabResourceHttp) {
         return $mongolabResourceHttp('casting');
     });
+    window.molotov.factory('Updates', function($mongolabResourceHttp) {
+        return $mongolabResourceHttp('updates');
+    });
     window.molotov.factory('Client', function($mongolabResourceHttp) {
         return $mongolabResourceHttp('client');
     });
@@ -61,13 +67,16 @@
             };
         }
     ]);
-    window.molotov.controller('MolotovController', ['$scope', '$http', '$routeParams', 'Series', 'Casting', 'Client', 'Facebook', 'AllSeries',
-        function($scope, $http, $routeParams, Series, Casting, Client, Facebook, AllSeries) {
+    window.molotov.controller('MolotovController', ['$scope', '$http', '$routeParams', 'Series',
+        'Casting', 'Client', 'Updates', 'Facebook', 'AllSeries',
+        function($scope, $http, $routeParams, Series, Casting, Client, Updates, Facebook, AllSeries) {
             $scope.series = [];
             $scope.load = true;
             $scope.limit = 10;
             $scope.sk = 10;
             $scope.allseries = new AllSeries();
+            $scope.seriestoday = [];
+            $scope.user = null;
 
             $scope.stopLoad = function() {
                 $scope.load = false;
@@ -76,8 +85,51 @@
             $scope.tracking = function() {
                 _gaq.push(['_trackPageview', window.location.href]);
             };
-            $scope.cleanAll = function() {
+            $scope.getseriestoday = function() {
+                var d = new Date();
+                var day = 0;
+                if (d.getMonth() < 10) {
+                    day = '0' + (d.getMonth() + 1);
+                }
+                var today = day + '_' + d.getDate() + '_' + d.getFullYear();
+                try {
+                    Updates.query({
+                        update: today
+                    }).then(function(results) {
+                        $scope.seriestoday = results;
+                    });
+                } catch (e) {
 
+                }
+            };
+            $scope.getseriesday = function() {
+                var d = new Date();
+                var day = 0;
+                if (d.getMonth() < 10) {
+                    day = '0' + (d.getMonth() + 1);
+                }
+                var today = day + '_' + d.getDate() + '_' + d.getFullYear();
+                try {
+                    Updates.query({
+                        // update: today
+                    }).then(function(results) {
+                        var r = _.groupBy(results, function(obj) {
+                            return obj.update;
+                        });
+                        console.log();
+                        $scope.seriesday = [];
+                        for (var key in r) {
+                            var obj = {};
+                            obj.date = key;
+                            obj.series = r[key];
+                            $scope.seriesday.push(obj);
+                        }
+                        console.log($scope.seriesday);
+                        $scope.load = false;
+                    });
+                } catch (e) {
+
+                }
             };
             $scope.getbirthday = function(year) {
                 /**/
@@ -251,11 +303,14 @@
                     };
                     $scope.serie.currentlink = PLAYERS[p].replace("{{id}}", k);
                     $scope.serie.episodio = info;
+                    $scope.serie.index = id;
                     try {
                         var type = info.split('_');
                         var _eps = $scope.serie[type[1]];
                         var ep = _eps[type[0] - 1].episodios[id];
                         $scope.serie.episodio = ep;
+                        $scope.serie.eps = _eps[type[0] - 1].episodios;
+
                     } catch (e) {
                         console.log(e);
                     }
@@ -271,6 +326,10 @@
 
                     FB.XFBML.parse();
                 } catch (e) {}
+            };
+
+            $scope.hasok = function(){
+
             };
 
             $scope.loadoff = function() {

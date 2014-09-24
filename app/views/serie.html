@@ -214,7 +214,7 @@ h1 {
                                 </ul>
 
                                 <div class="tab__container">
-                                    <div id="dtab{{$index}}" ng-repeat="t in serie.dublado" class="tab__content" ng-class="{show:$first}">
+                                    <div id="dtab{{$index}}" ng-repeat="(i,ep) in serie.dublado" class="tab__content" ng-class="{show:$first}">
                                         <div class="sections already-visible come-in" style="padding:0;">
                                             <h2 class="heading ng-binding" style="padding: 0;margin: 0;">{{t.title}}</h2>
 
@@ -226,7 +226,7 @@ h1 {
                                                 <div class="media-body">
                                                     <h4 class="media-heading">{{ep.title}}</h4>
                                                     <p>
-                                                        <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{$index}}&info={{ep.hashid}}" ng-repeat="l in ep.link" class="btn btn-primary btn-xs backcolor" style="margin-right:1%">{{l.player}}</a>
+                                                        <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{i}}&info={{ep.hashid}}" ng-repeat="l in ep.link" class="btn btn-primary btn-xs backcolor" style="margin-right:1%">{{l.player}}</a>
                                                     </p>
                                                 </div>
                                                 <hr>

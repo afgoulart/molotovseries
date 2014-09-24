@@ -17,8 +17,10 @@
         </ol>
     </div>
     <h2 class="heading" style="margin-top:-3%">{{serie.title}} - {{serie.episodio.title}}
-     <div class="fb-like" data-href="http://localhost/molotovseries/#!/serie/{{serie._id.$oid}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true" style="float:left"></div></h2>
-     <p>Deseja trocar de player? <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{$index}}&info={{serie.episodio.hashid}}" ng-repeat="l in serie.episodio.link" class="btn btn-primary btn-xs backcolor" style="margin-right:1%">{{l.player}}</a></p>
+        <div class="fb-like" data-href="http://localhost/molotovseries/#!/serie/{{serie._id.$oid}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true" style="float:left"></div>
+    </h2>
+    <p>Deseja trocar de player? <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{serie.index}}&info={{serie.episodio.hashid}}" ng-repeat="l in serie.episodio.link" class="btn btn-primary btn-xs backcolor" style="margin-right:1%">{{l.player}}</a>
+    </p>
     <div class="row">
         <div id="loading" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 alert alert-warning fade in">
             <h6>Carregando Episódio... aguarde</h6>
@@ -26,8 +28,28 @@
         </div>
     </div>
     <div id="player" class="row" style="display:none">
-        <iframe id="iplayer" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="width:100%;height:600px;border:0px solid grey" ng-src="{{serie.currentlink | trusted}}" frameborder="0" allowfullscreen>
+        <iframe id="iplayer" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="width:100%;height:560px;border:0px solid grey" ng-src="{{serie.currentlink | trusted}}" frameborder="0" allowfullscreen>
         </iframe>
+    </div>
+    <div id="othereps" ng-show="serie.eps.length-1">
+        <hr>
+        <h4>Gostou? Assita outros episódios:</h4>
+        <div class="row">
+            <figure class="col-md-2 element-item1 gallery" ng-repeat="(i,ep) in serie.eps">
+            <div style="position:absolute;background:yellow;color:black;width:85%;border:1px solid white;z-index:999;top:10%; opacity:0.8; font-weight:bold">ASSISTIDO</div>
+                <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{i}}&info={{ep.hashid}}" ng-repeat="l in ep.link" ng-show="$first" class="lightbox-gallery">
+                    <img style="width:100%; height:100%" bn-lazy-src="http://imagizer.imageshack.us/300x300/{{serie.img}}" id="{{ep.hashid}}" alt="{{ep.title}}" class="img-responsive hovereffect imageCache">
+                </a>
+                <!-- <figcaption class="backcolor"> -->
+
+                    <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{i}}&info={{ep.hashid}}" ng-repeat="l in ep.link" ng-show="$first"> <b> {{ep.title}}</b></a>
+                <!-- </figcaption> -->
+            </figure>
+        </div>
+    </div>
+    <div id="releps" style="display:none">
+        <hr>
+        <h4>Gostou desta série? Assista também:</h4>
     </div>
     <hr>
     <h5>Conte-nos o que você achou desse episódio</h5>
