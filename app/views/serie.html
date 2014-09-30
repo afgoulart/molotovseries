@@ -184,11 +184,22 @@ h1 {
 
                                             <div class="clearfix"></div>
                                             <div class="media" ng-repeat="(i,ep) in t.episodios">
-                                                <div class="media-body">
-                                                    <h4 class="media-heading">{{ep.title}}</h4>
-                                                    <p>
-                                                        <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{i}}&info={{ep.hashid}}" ng-repeat="l in ep.link" class="btn btn-primary btn-xs backcolor" style="margin-right:1%">{{l.player}}</a>
-                                                    </p>
+                                                <div class="media-body row">
+                                                    <div class="col-md-10 col-xs-12">
+
+                                                        <h4 class="media-heading">{{ep.title}}</h4>
+
+
+
+                                                        <p>
+                                                            <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{i}}&info={{ep.hashid}}" ng-repeat="l in ep.link" class="btn btn-primary btn-xs backcolor" style="margin-right:1%">{{l.player}}</a>
+
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-2 col-xs-12" ng-show="loginStatusb">
+                                                        <button class="btn btn-default btn-xs" ng-click="assisti(serie.hashid,ep.hashid,true)" ng-hide="assisti(serie.hashid,ep.hashid,null)">Já Assisti</button>
+                                                        <div style="position:absolute;background:yellow;color:black;width:85%;border:1px solid white;z-index:999;top:10%; opacity:0.8; font-weight:bold;text-align:center" ng-show="assisti(serie.hashid,ep.hashid,null)">ASSISTIDO</div>
+                                                    </div>
                                                 </div>
                                                 <hr>
                                             </div>

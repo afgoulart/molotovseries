@@ -103,18 +103,14 @@
                 }
             };
             $scope.getseriesday = function() {
-                var d = new Date();
-                var day = 0;
-                if (d.getMonth() < 10) {
-                    day = '0' + (d.getMonth() + 1);
-                }
-                var today = day + '_' + d.getDate() + '_' + d.getFullYear();
                 try {
                     Updates.query({
                         // update: today
                     }).then(function(results) {
                         var r = _.groupBy(results, function(obj) {
-                            return obj.update;
+                            var d = obj.update.split('_');
+                            var dd = d[1] + '/' + d[0] + '/' + d[2];
+                            return dd;
                         });
                         console.log();
                         $scope.seriesday = [];
@@ -124,6 +120,9 @@
                             obj.series = r[key];
                             $scope.seriesday.push(obj);
                         }
+                        $scope.seriesday = _.sortBy($scope.seriesday, function(obj) {
+                            return obj.date;
+                        });
                         console.log($scope.seriesday);
                         $scope.load = false;
                     });
@@ -131,6 +130,7 @@
 
                 }
             };
+
             $scope.getbirthday = function(year) {
                 /**/
                 try {
@@ -285,6 +285,7 @@
                 $(".tab__head li").removeClass("active");
                 $(this).addClass("active");
             };
+
             $scope.showepisode = function() {
                 $scope.load = true;
 
@@ -323,13 +324,46 @@
                     // $("#player").load($scope.serie.currentlink + " #flvplayer_wrapper");
                 });
                 try {
+                    $scope.setSeeInterval = setInterval(function() {
+                        $scope.assisti($scope.serie.hashid, $scope.serie.episodio.hashid, true);
+                        console.log('gravou');
+                        clearInterval($scope.setSeeInterval);
+                    }, 30000);
+
+                } catch (E) {}
+                try {
 
                     FB.XFBML.parse();
                 } catch (e) {}
             };
 
-            $scope.hasok = function(){
-
+            $scope.assisti = function(seriehashid, hashid, status) {
+                if ($scope.user !== null) {
+                    if ($scope.user.preferencias === undefined) {
+                        $scope.user.preferencias = {};
+                    }
+                    if ($scope.user.preferencias[seriehashid] === undefined) {
+                        $scope.user.preferencias[seriehashid] = {};
+                        try {
+                            new Client($scope.user).$update();
+                        } catch (e) {
+                            console.log($scope.user, e);
+                        }
+                        return false;
+                    }
+                    if (status === null) {
+                        return $scope.user.preferencias[seriehashid][hashid];
+                    } else {
+                        $scope.user.preferencias[seriehashid][hashid] = true;
+                        try {
+                            new Client($scope.user).$update();
+                            // var u = new Client($scope.user);
+                            // u.$update();
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                }
             };
 
             $scope.loadoff = function() {
@@ -387,28 +421,39 @@
             };
 
             $scope.api = function() {
-                Facebook.api('/me', function(response) {
-                    $scope.user = response;
-                    console.log($scope.user);
-                    Client.query({
-                        "id": $scope.user.id
-                    }).then(function(result) {
-                        if (result.length === 0) {
-                            $scope.user.dtcreated = Date.now();
-                            var c = new Client($scope.user);
-                            var r = c.$saveOrUpdate();
-                            window.localStorage['u'] = JSON.stringify(r);
-                        } else {
-                            window.localStorage['u'] = JSON.stringify(result[0]);
-                        }
-                        /**/
-                        try {
-                            _gaq.push(['_trackEvent', 'user', $scope.user.id]);
-                        } catch (e) {}
-                        /**/
-                    });
+                // console.log($scope.loginStatusb, $scope.user === null);
+                if ($scope.loginStatusb) {
+                    if ($scope.user === null) {
 
-                });
+                        Facebook.api('/me', function(response) {
+                            // $scope.user = ;
+                            // console.log($scope.user);
+                            Client.query({
+                                "id": response.id
+                            }).then(function(result) {
+                                console.log('result', result);
+                                if (result.length === 0) {
+                                    console.log("CRIOU");
+                                    $scope.user = new Client(response);
+                                    $scope.user.dtcreated = Date.now();
+                                    $scope.user = $scope.user.$saveOrUpdate();
+                                    window.localStorage['u'] = JSON.stringify($scope.user);
+                                } else {
+                                    console.log("RECUPEROU");
+                                    window.localStorage['u'] = JSON.stringify(result[0]);
+                                    $scope.user = JSON.parse(window.localStorage['u']);
+                                }
+                                console.log("$scope.user", $scope.user);
+                                /**/
+                                try {
+                                    _gaq.push(['_trackEvent', 'user', $scope.user.id]);
+                                } catch (e) {}
+                                /**/
+                            });
+
+                        });
+                    }
+                }
             };
 
             $scope.$watch(function() {
@@ -421,6 +466,7 @@
                         console.log($scope.loginStatus);
                         if ($scope.loginStatus === 'connected') {
                             $scope.loginStatusb = true;
+                            $scope.api();
                         }
                     });
                 }

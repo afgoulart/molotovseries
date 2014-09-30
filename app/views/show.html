@@ -36,13 +36,15 @@
         <h4>Gostou? Assita outros episódios:</h4>
         <div class="row">
             <figure class="col-md-2 element-item1 gallery" ng-repeat="(i,ep) in serie.eps">
-            <div style="position:absolute;background:yellow;color:black;width:85%;border:1px solid white;z-index:999;top:10%; opacity:0.8; font-weight:bold">ASSISTIDO</div>
+                <div style="position:absolute;background:yellow;color:black;width:85%;border:1px solid white;z-index:999;top:10%; opacity:0.8; font-weight:bold" ng-show="assisti(serie.hashid,ep.hashid,null)">ASSISTIDO</div>
+
                 <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{i}}&info={{ep.hashid}}" ng-repeat="l in ep.link" ng-show="$first" class="lightbox-gallery">
                     <img style="width:100%; height:100%" bn-lazy-src="http://imagizer.imageshack.us/300x300/{{serie.img}}" id="{{ep.hashid}}" alt="{{ep.title}}" class="img-responsive hovereffect imageCache">
                 </a>
                 <!-- <figcaption class="backcolor"> -->
 
-                    <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{i}}&info={{ep.hashid}}" ng-repeat="l in ep.link" ng-show="$first"> <b> {{ep.title}}</b></a>
+                <a ng-href="#!/show/{{serie._id.$oid}}?p={{l.player}}&k={{l.id}}&i={{i}}&info={{ep.hashid}}" ng-repeat="l in ep.link" ng-show="$first"> <b> {{ep.title}}</b>
+                </a>
                 <!-- </figcaption> -->
             </figure>
         </div>
@@ -60,15 +62,22 @@
 
 <script>
 $('iframe').load(function() {
-    // jwplayer().play();
+    // var myConfObj = {
+    //     iframeMouseOver: false
+    // }
+    // window.addEventListener('blur', function() {
+    //     if (myConfObj.iframeMouseOver) {
+    //         console.log('Wow! Iframe Click!');
+    //     }
+    // });
+    // document.getElementById('iplayer').addEventListener('mouseover', function() {
+    //     myConfObj.iframeMouseOver = true;
+    // });
+    // document.getElementById('iplayer').addEventListener('mouseout', function() {
+    //     myConfObj.iframeMouseOver = false;
+    // });
     $("#loading").hide();
     $("#player").show();
-    // $("iframe #flvplayer_wrapper").attr('style', 'position: static;width: 100%;height: 720px;');
-    // alert($("iframe #flvplayer_wrapper").attr('style'));
+
 });
-
-
-// $(window).load(function() {
-
-// });
 </script>

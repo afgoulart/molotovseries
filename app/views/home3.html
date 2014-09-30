@@ -43,7 +43,7 @@ ol {
 }
 </style>
 
-<div class="row">
+<div class="row" ng-init="api()">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div style="display:box;" ng-init="getseriestoday()" ng-hide="load">
             <!-- <h2>Séries 2014</h2> -->
@@ -55,8 +55,9 @@ ol {
                 </li>
             </ol>
             <hr>
-            <div class="alert alert-info" ng-show="seriestoday.length==0">Aguardando atualizações... Veja mais em <a href="">Séries do dia</a> alt=""></div>
+            <div class="alert alert-info" ng-show="seriestoday.length==0">Aguardando atualizações... Veja mais em <a href="#!/">Séries do dia</a></div>
             <!--.container-->
+            
             <div class="row">
                 
                 <figure class="col-md-1 element-item1 gallery" data-category="{{s.update}}" ng-repeat="s in seriesday">
