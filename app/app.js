@@ -48,7 +48,7 @@
         /*FacebookProvider.init('1501692520077015');*/
     });
     window.molotov.constant('MONGOLAB_CONFIG', {
-        API_KEY: 'F1Fk9-FjLLrA4c62rbTuCDmgkGg0sE4A',
+        API_KEY: '',
         DB_NAME: 'molotovseries'
     });
     window.molotov.factory('Series', function($mongolabResourceHttp) {
