@@ -7,10 +7,13 @@
     window.molotov.config(function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'app/views/home3.html'
+                templateUrl: 'app/views/home.html'
             })
             .when('/all', {
-                templateUrl: 'app/views/home.html'
+                templateUrl: 'app/views/all.html'
+            })
+            .when('/about', {
+                templateUrl: 'app/views/about.html'
             })
             .when('/seriesday', {
                 templateUrl: 'app/views/seriesday.html'
@@ -85,6 +88,7 @@
             $scope.tracking = function() {
                 _gaq.push(['_trackPageview', window.location.href]);
             };
+            /**/
             $scope.getseriestoday = function() {
                 var d = new Date();
                 var day = 0;
