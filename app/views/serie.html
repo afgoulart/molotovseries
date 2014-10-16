@@ -42,15 +42,19 @@ h1 {
     float: left;
     list-style: none;
     /* height: 32px; */
+    
     width: 100%;
 }
 .v-tab .tab__head li {
     float: left;
     /*margin-left:1%;*/
+    
     padding-left: 1%;
     /*margin: 0 0 1px 0;*/
+    
     cursor: pointer;
     /*padding: 0px 10%;*/
+    
     height: 32px;
     line-height: 31px;
     color: #333;
@@ -59,6 +63,7 @@ h1 {
     position: relative;
     /*border-top-left-radius: 4px;*/
     /*border-bottom-left-radius: 4px;*/
+    
     background-color: #e5e5e5;
     width: 10%;
     border: 1px solid #ccc;
@@ -68,6 +73,7 @@ h1 {
     width: 100%;
 
   }*/
+    
     .interactivetabs .nav-tabs > li {
         width: 100%;
     }
@@ -81,6 +87,7 @@ h1 {
     background-color: #fff;
     color: #333;
     /*border-right: 0;*/
+    
     display: block;
 }
 .v-tab .tab__container {
@@ -115,11 +122,14 @@ h1 {
         </div>
         <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
             <div class="blogtext">
+
                 <h2 class="heading"> <u> {{serie.title}} ( {{serie.ano}} )</u> 
                     <div class="fb-like" data-href="http://localhost/molotovseries/#!/serie/{{serie._id.$oid}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true" style="float:left"></div>
                 </h2>
                 <a ng-href="#!/seriebycat/{{c}}" class="btn btn-primary btn-xs backcolor" ng-repeat="c in serie.info.categorias" style="margin-right:1%">{{c}}</a>
                 <hr>
+                <div class="alert alert-warning">Links quebrados? Avise-nos: <a href="mailto:molotovseries@gmail.com" target="_blank">molotovseries@gmail.com</a>
+                </div>
                 <div class="interactivetabs">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" style="background: white;">
