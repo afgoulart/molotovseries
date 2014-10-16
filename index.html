@@ -4,16 +4,24 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Molotov Series</title>
-    <!--// Responsive //-->
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
     <meta name="robots" content="*">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1,requiresActiveX=true">
-
     <link rel="search" title="" type="application/opensearchdescription+xml" href="">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!--// Stylesheets //-->
+    <!--  -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:url" content="http://www.molotovoseries.com">
+    <meta property="og:title" content="O primeiro portal de séries, open-source">
+    <meta property="og:site_name" content="MolotovSeries">
+    <meta property="og:description" content="O molotovseris tem o objetivo de prover acesso facilitado a um acervo completo de séries de TV sem propaganda e com código-aberto.">
+    <meta property="og:image" content="www.molotovseries.com.br/assets/images/MOLOTOV1.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="448">
+    <meta property="og:image:height" content="184">
+    <!--  -->
     <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon">
     <link href="assets/css/style.css" rel="stylesheet" media="screen">
     <link href="assets/css/bootstrap.css" rel="stylesheet" media="screen">
@@ -40,7 +48,6 @@
 </head>
 
 <body>
-
     <!-- Wrapper Start -->
     <div class="wrapper" ng-controller="MolotovController">
         <!-- Header Start -->
@@ -48,10 +55,6 @@
             <a href="https://github.com/">
                 <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub">
             </a>
-            <!-- Header Top Strip Start -->
-
-            <!-- Header Top Strip End -->
-            <!-- Logo + Search + Advertisment Start -->
             <div class="logobar">
                 <div class="custom-container">
                     <div class="row">
@@ -78,22 +81,10 @@
                                     <span class="ng-binding-likes">E aproveite todos os nossos recursos</span>
                                 </div>
                             </a>
-                            <!-- <a href="javascript:void(0)" ng-click="removeAuth();">REMOVER</a> -->
-                            <!-- <a href="javascript:void(0)" ng-click="logout();">logout</a> -->
-                            <!-- <a href="javascript:void(0)" ng-click="api();">api</a> -->
-                            <!-- <br>{{facebookIsReady}} -->
-                            <!-- <button type="button" id="login" >login</button> -->
-                            <!-- <button type="button" id="logout" ng-click="logout()">logout</button> -->
-                            <!-- <button type="button" id="api" ng-click="api()">api user data call</button> -->
-                            <!-- <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button> -->
-                            <!-- <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre> -->
-                            <!-- <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre> -->
-                            <!-- <pre>username: <span id="api_first_name" ng-bind="user.first_name"></span></pre> -->
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Logo + Search + Advertisment End -->
             <!-- Navigation Strip Start -->
             <div class="navigationstrip stickynav bordercolor-top">
                 <div class="custom-container">
@@ -117,28 +108,14 @@
                                                 <li class="dropdown">
                                                     <a href="#!/all" ng-click="load = true" class="dropdown-toggle">Ver todas</a>
                                                 </li>
-                                                <!--                                                 <li class="dropdown">
-                                                    <a href="#!" class="dropdown-toggle">Favoritos</a>
-                                                </li> -->
                                                 <li class="dropdown">
-                                                    <a href="#!/seriesday" class="dropdown-toggle">Séries do dia</a>
+                                                    <a href="#!/seriebycat/Sci-Fi" ng-click="load = true" class="dropdown-toggle">Categorias</a>
                                                 </li>
                                                 <li class="dropdown">
                                                     <a href="#!/calendar" data-toggle="dropdown" class="dropdown-toggle">Calendário de Séries</a>
                                                 </li>
-                                                <li class="dropdown" style="width:360px">
-                                                    <div class="searchbox" style="padding-top:2%">
-                                                        <form>
-                                                            <ul>
-                                                                <li>
-                                                                    <input type="text" ng-model="search" placeholder="Search your favorite serie">
-                                                                </li>
-                                                                <li class="pull-right">
-                                                                    <input onclick="window.location='#!/all'" type="submit" value="GO">
-                                                                </li>
-                                                            </ul>
-                                                        </form>
-                                                    </div>
+                                                 <li class="dropdown">
+                                                    <a href="#!/about" data-toggle="dropdown" class="dropdown-toggle">Sobre o Molotov</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -156,13 +133,11 @@
         </header>
         <!-- Header End -->
         <!-- Contents Start -->
-
         <div class="contents" style="height-min:500px;">
             <div class="custom-container">
                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12" style="border-right:1px solid lightgrey;">
                     <div ng-include="'load.html'" ng-show="load"></div>
                     <div style="width:100%" ng-view>
-
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
@@ -189,16 +164,14 @@
         <!-- Footer Start -->
         <footer class="style1" style="margin-top:8%">
             <div class="custom-container">
-                <!-- Footer Videos Start -->
                 <div class="row"></div>
                 <!-- Footer Videos End -->
                 <hr>
                 <div class="row">
                     <div class="col-lg-10 col-md-10 col-sm-9 .col-xs-9">
-                        <p class="copyrights">© 2014. All rights reserved? hahahahahaha . Created by Molotov Na Cara
+                        <p class="copyrights">© 2014 Open-Source - <a href="http://opensource.org/licenses/EPL-1.0" target="_blank">Eclipse Public License</a>
                         </p>
                     </div>
-
                 </div>
             </div>
         </footer>
@@ -207,11 +180,6 @@
         </a>
     </div>
     <!-- Wrapper End -->
-    <!--// Javascript //-->
-    <!--<script type="text/javascript" src="assets/js/rsvp-latest.min.js"></script>
-    <script type="text/javascript" src="assets/js/basket.min.js"></script>-->
-    <script>
-    </script>
     <script type="text/javascript" src="assets/js/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="assets/js/angular/angular.js"></script>
     <script type="text/javascript" src="assets/js/angular/angular-route.js"></script>
@@ -231,7 +199,7 @@
             (i[r].q = i[r].q || []).push(arguments)
         }, i[r].l = 1 * new Date();
         a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0];
+            m = s.getElementsByTagName(o)[0];
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)
